@@ -20,6 +20,7 @@ public:
     void setPos(const Vector2 & newPos);
     Vector2 getPos();
     
+    void hit();
     void setColor(const Vector3 & color);
     
     void compile();
@@ -29,6 +30,7 @@ protected:
     static GLuint ballList;
     static bool compiled;
     Vector2 pos;
+    bool active;
     
     Vector3 color;
     GLfloat specular[4];

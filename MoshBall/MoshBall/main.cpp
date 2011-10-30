@@ -1,20 +1,54 @@
+#define HOURS_SPENT 3
+
 #import <OpenGL/OpenGL.h>
 #import <GLUT/GLUT.h>
 #include <cstdlib>
 #include <math.h>
 #include <iostream>
-
+#include "VectorLib/Vectors.h"
+#include "Arena.h"
+#include "Player.h"
+#include "Ball.h"
 #include "highprecisiontime.h"
 
 #define NUM_MODES 2
+#define NUM_BALLS 500
+#define SEED 0
+
 bool paused = false;
 
 double mouseX, mouseY;
 int height, width;
-
 int mode;
 
-//HighPrecisionTime *time = new HighPrecisionTime();
+Arena *arena;
+Player *player;
+Ball *bArray[NUM_BALLS];
+
+double rangeRand(double start, double end)
+{
+    return ((rand()/(double)RAND_MAX)*(end-start))+start;
+}
+
+void initGame()
+{
+    srand(SEED);
+    
+    HighPrecisionTime *hTime;
+    hTime = new HighPrecisionTime();
+    
+    arena = new Arena();
+    
+    Vector2 posVec;
+    for(int i = 0; i < NUM_BALLS; i++) 
+    {
+        bArray[i] = new Ball();
+        GLfloat x = (GLfloat) rangeRand(-.5*arena->getWidth(), .5*arena->getWidth());
+        GLfloat y = (GLfloat) rangeRand(-.5*arena->getLength(), .5*arena->getLength());
+        posVec.set(x,y);
+        bArray[i]->setPos(posVec);
+    }
+}
 
 //Draws the xyz axis at current frame of reference
 void drawAxis(double size)
@@ -33,6 +67,14 @@ void drawAxis(double size)
 	gluCylinder(gluNewQuadric(),0.01*size,0.01*size,1*size,10,1);
 
 	glPopMatrix();
+}
+
+void drawBalls()
+{
+    for(int i = 0; i < NUM_BALLS; i++)
+    {
+        bArray[i]->draw();
+    }
 }
 
 //Called when mouse dragged (sets mouseX and mouseY from -1 to 1)
@@ -61,14 +103,15 @@ void DisplayFunc()
 	//Enable depth, lighting, and fog ONLY AFTER stars are drawn
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHTING);
-    glEnable(GL_FOG);
+    //glEnable(GL_FOG);
 
-	
+	arena->draw();
+    drawBalls();
 
 	//Disable depth, lighting, and fog for stars to be drawn next time
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_LIGHTING);
-    glDisable(GL_FOG);
+    //glDisable(GL_FOG);
 
 	//DoubleBuffering
 	glutSwapBuffers();
@@ -102,7 +145,7 @@ void ReshapeFunc(int w, int h)
 	width = w;
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(60.0 , ((double) w) / ((double) h) , 1.0f , 1000.0);
+	gluPerspective(60.0 , ((double) w) / ((double) h) , 1.0f , 10000.0);
 	glViewport(0 , 0 , w , h);
 }
 
@@ -122,6 +165,7 @@ int main(int argc, char * argv[])
     glEnable(GL_NORMALIZE);
     
 	//Fog data
+    /*
     float fogColor[] = { 0.0f, 0.0f, 0.0f, 1 };
     glFogfv(GL_FOG_COLOR, fogColor);
 	glFogf(GL_FOG_START, 500);
@@ -129,6 +173,7 @@ int main(int argc, char * argv[])
     glFogf (GL_FOG_DENSITY, 0.9f);
     glHint (GL_FOG_HINT, GL_FASTEST);
     glFogi(GL_FOG_MODE, GL_LINEAR);
+     */
 	
     //Callback Functions
 	glutDisplayFunc(DisplayFunc);
@@ -138,7 +183,8 @@ int main(int argc, char * argv[])
     glutKeyboardFunc(KeyboardFunc);
     glutSpecialFunc(SpecialFunc);
 
-
+    //Init
+    initGame();
     
 	//Initiate program
 	glutMainLoop();

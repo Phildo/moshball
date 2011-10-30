@@ -8,6 +8,7 @@ Ball::Ball()
 	if(!compiled) {
         Ball::compile();
     }
+    active = false;
 }
 
 void Ball::setPos(const Vector2 & newPos)
@@ -54,6 +55,13 @@ void Ball::compile()
 void Ball::draw()
 {
     if(!compiled) return;
+    Vector3 newCol;
+    if(active) newCol.set((GLfloat)0.5, (GLfloat)1.0, (GLfloat)0.0);
+    else newCol.set((GLfloat)0.5, (GLfloat)1.0, (GLfloat)0.0);
+    setColor(newCol);
+    glPushMatrix();
+    glTranslated((GLdouble)this->pos[0], (GLdouble)0.0, (GLdouble)this->pos[1]);
     glCallList(ballList);
+    glPopMatrix();
 }
 

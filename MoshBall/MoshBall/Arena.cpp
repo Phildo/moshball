@@ -10,6 +10,16 @@ Arena::Arena()
     }
 }
 
+double Arena::getWidth()
+{
+    return ARENA_WIDTH;
+}
+
+double Arena::getLength()
+{
+    return ARENA_LENGTH;
+}
+
 void Arena::compile()
 {
     if(compiled) return;

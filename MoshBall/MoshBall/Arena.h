@@ -22,6 +22,9 @@ public:
 	Arena();
     ~Arena();
 
+    double getWidth();
+    double getLength();
+    
     void compile();
 	void draw();
     
