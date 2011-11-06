@@ -1,4 +1,4 @@
-#define HOURS_SPENT 3
+#define HOURS_SPENT 3+2.5
 
 #import <OpenGL/OpenGL.h>
 #import <GLUT/GLUT.h>
@@ -18,6 +18,7 @@ bool paused = false;
 double mouseX, mouseY;
 int height, width;
 int mode;
+bool collision;
 
 Arena *arena;
 Player *player;
@@ -31,6 +32,8 @@ double rangeRand(double start, double end)
 void initGame()
 {
     srand(SEED);
+    
+    Model::setUpModel();
     
     HighPrecisionTime *hTime;
     hTime = new HighPrecisionTime();
@@ -80,8 +83,8 @@ void drawBalls()
 //(only needs to 'look' correct)
 void MotionFunc(int x, int y)
 {
-	mouseX = -2.0*(x-(width/2.0))/width;
-	mouseY = 2.0*(y-(height/2.0))/height;
+	//mouseX = -2.0*(x-(width/2.0))/width;
+	//mouseY = 2.0*(y-(height/2.0))/height;
 }
 
 //Called when mouse dragged (sets mouseX and mouseY from -1 to 1)
@@ -92,24 +95,69 @@ void PassiveMotionFunc(int x, int y)
 	mouseY = 2.0*(y-(height/2.0))/height;
 }
 
-void updatePlayer()
+void updatePlayer(double timePassed)
 {
-    player->setDir(player->getDir());
-    player->setPos(player->getPos()+(player->getDir()*player->getVel()));
+    player->setDir(player->getDir().rotate(mouseX*-1*timePassed));
+    player->setVel(mouseY*-1000);
+    Vector2 newPos  = player->getPos()+(player->getDir()*(player->getVel()*timePassed));
+    
+    Vector2 temp = player->getDir();
+    Vector2 temp2 = player->getPos();
+    //Check wall collision
+    collision = false;
+    if(newPos[0] < ARENA_WIDTH*-.5+BALL_RADIUS)
+    {
+        player->setDir(player->getDir().reflectOverVector(Model::SouthVect));
+        collision = true;
+    }
+    else if(newPos[0] > ARENA_WIDTH*.5-BALL_RADIUS)
+    {
+        player->setDir(player->getDir().reflectOverVector(Model::NorthVect));
+        collision = true;
+    }
+    else if(newPos[1] < ARENA_LENGTH*-.5+BALL_RADIUS)
+    {
+        player->setDir(player->getDir().reflectOverVector(Model::EastVect));
+        collision = true;
+    }
+    else if(newPos[1] > ARENA_LENGTH*.5-BALL_RADIUS)
+    {
+        player->setDir(player->getDir().reflectOverVector(Model::WestVect));
+        collision = true;
+    }
+    temp = player->getDir();
+    
+    if(collision == true)
+    {
+        newPos  = player->getPos()+(player->getDir()*(player->getVel()*timePassed));
+    }
+    
+    player->setPos(newPos);
+
+    temp2 = player->getPos();
+
 }
 
-void updateBalls()
+void updateBalls(double timePassed)
 {
     
+}
+
+void IdleFunc()
+{
+    double timePassed;
+    timePassed = .01;
+    
+    //Update Model
+    updatePlayer(timePassed);
+    updateBalls(timePassed);
+    
+    glutPostRedisplay();
 }
 
 //Called to update display
 void DisplayFunc()
 {
-    //Update Model
-    updatePlayer();
-    updateBalls();
-    
 	//Clear screen
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
@@ -117,7 +165,7 @@ void DisplayFunc()
 
 	//Set camera to look relative to position of mouse on screen
 	//gluLookAt(0.0f,0.0f,-5.0f,mouseX*10,mouseY*10,-10.0f,0.0f,1.0f,0.0f);
-    gluLookAt(player->getPos()[0], 0.0, player->getPos()[1], player->getDir()[0], 0.0, player->getDir()[1], 0.0, 1.0, 0.0);
+    gluLookAt(player->getPos()[0], 0.0, player->getPos()[1], player->getPos()[0]+player->getDir()[0], 0.0, player->getPos()[1]+player->getDir()[1], 0.0, 1.0, 0.0);
 
 	//Aim Light
     GLfloat pos[4] = {0.0f, 10.0f, 0.0f, 1.0f};
@@ -201,7 +249,7 @@ int main(int argc, char * argv[])
     //Callback Functions
 	glutDisplayFunc(DisplayFunc);
 	glutReshapeFunc(ReshapeFunc);
-	//glutIdleFunc(DisplayFunc);
+	glutIdleFunc(IdleFunc);
 	glutMotionFunc(MotionFunc);
     glutPassiveMotionFunc(PassiveMotionFunc);
     glutKeyboardFunc(KeyboardFunc);

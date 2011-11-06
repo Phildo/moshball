@@ -19,12 +19,18 @@
 #define BALL_RADIUS 50
 #define FULL_TIME (30+(NUM_BALLS*2))
 #include <time.h>
+#include "VectorLib/Vectors.h"
 
 class Model{
     public:
     static time_t currTime;
+    static Vector2 NorthVect;
+    static Vector2 SouthVect;
+    static Vector2 WestVect;
+    static Vector2 EastVect;
     
-    void updateTime();
+    static void setUpModel();
+    static void updateTime();
 };
 
 #endif

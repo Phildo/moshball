@@ -38,7 +38,9 @@ class Vector2
         GLfloat dot(const Vector2& v) const;
         GLfloat distance(const Vector2& v) const;
         GLfloat distanceSquared(const Vector2& v) const;
-        Vector2 rotate(double deg) const;
+        
+        Vector2 rotate(double rad) const;
+        Vector2 reflectOverVector(const Vector2& norm) const;
         
         void drawLine(void) const;
         

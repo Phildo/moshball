@@ -191,7 +191,9 @@ GLfloat Vector2::distanceSquared(const Vector2& v) const
     }
 
 Vector2 Vector2::rotate(double rad) const
-{    
+{   
+    Vector2 rotatedVect;
+    
     //MATH FROM USER Caspar Kleijne http://stackoverflow.com/questions/4780119/2d-vector-rotation-c
     GLfloat x = this->vec[0];
     GLfloat y = this->vec[1];
@@ -200,9 +202,18 @@ Vector2 Vector2::rotate(double rad) const
     px = x * cos(rad) - y * sin(rad); 
     py = x * sin(rad) + y * cos(rad);
     
-    Vector2 rotatedVect;
+    
     rotatedVect.set(px,py);
     return rotatedVect;
+}
+
+Vector2 Vector2::reflectOverVector(const Vector2& norm) const
+{
+    Vector2 reflectedVect;
+    
+    reflectedVect.set(this->vec[0], this->vec[1]);
+    reflectedVect = (norm*-2*(reflectedVect.dot(norm)))+reflectedVect;
+    return reflectedVect;
 }
 
 
