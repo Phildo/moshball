@@ -4,16 +4,14 @@
 #import <GLUT/GLUT.h>
 #include <cstdlib>
 #include <math.h>
+#include <time.h>
 #include <iostream>
+#include "Model.h"
 #include "VectorLib/Vectors.h"
 #include "Arena.h"
 #include "Player.h"
 #include "Ball.h"
 #include "highprecisiontime.h"
-
-#define NUM_MODES 2
-#define NUM_BALLS 500
-#define SEED 0
 
 bool paused = false;
 
@@ -38,13 +36,14 @@ void initGame()
     hTime = new HighPrecisionTime();
     
     arena = new Arena();
+    player = new Player();
     
     Vector2 posVec;
     for(int i = 0; i < NUM_BALLS; i++) 
     {
         bArray[i] = new Ball();
-        GLfloat x = (GLfloat) rangeRand(-.5*arena->getWidth(), .5*arena->getWidth());
-        GLfloat y = (GLfloat) rangeRand(-.5*arena->getLength(), .5*arena->getLength());
+        GLfloat x = (GLfloat) rangeRand(-.5*arena->getWidth()+BALL_RADIUS, .5*arena->getWidth()-BALL_RADIUS);
+        GLfloat y = (GLfloat) rangeRand(-.5*arena->getLength()+BALL_RADIUS, .5*arena->getLength()-BALL_RADIUS);
         posVec.set(x,y);
         bArray[i]->setPos(posVec);
     }
@@ -85,19 +84,43 @@ void MotionFunc(int x, int y)
 	mouseY = 2.0*(y-(height/2.0))/height;
 }
 
+//Called when mouse dragged (sets mouseX and mouseY from -1 to 1)
+//(only needs to 'look' correct)
+void PassiveMotionFunc(int x, int y)
+{
+	mouseX = -2.0*(x-(width/2.0))/width;
+	mouseY = 2.0*(y-(height/2.0))/height;
+}
+
+void updatePlayer()
+{
+    player->setDir(player->getDir());
+    player->setPos(player->getPos()+(player->getDir()*player->getVel()));
+}
+
+void updateBalls()
+{
+    
+}
+
 //Called to update display
 void DisplayFunc()
 {
+    //Update Model
+    updatePlayer();
+    updateBalls();
+    
 	//Clear screen
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
 	//Set camera to look relative to position of mouse on screen
-	gluLookAt(0.0f,0.0f,-5.0f,mouseX*10,mouseY*10,-10.0f,0.0f,1.0f,0.0f);
+	//gluLookAt(0.0f,0.0f,-5.0f,mouseX*10,mouseY*10,-10.0f,0.0f,1.0f,0.0f);
+    gluLookAt(player->getPos()[0], 0.0, player->getPos()[1], player->getDir()[0], 0.0, player->getDir()[1], 0.0, 1.0, 0.0);
 
 	//Aim Light
-    GLfloat pos[4] = {0.0f, 0.0f, 0.0f, 1.0f};
+    GLfloat pos[4] = {0.0f, 10.0f, 0.0f, 1.0f};
     glLightfv(GL_LIGHT0, GL_POSITION, pos);
 
 	//Enable depth, lighting, and fog ONLY AFTER stars are drawn
@@ -178,8 +201,9 @@ int main(int argc, char * argv[])
     //Callback Functions
 	glutDisplayFunc(DisplayFunc);
 	glutReshapeFunc(ReshapeFunc);
-	glutIdleFunc(DisplayFunc);
+	//glutIdleFunc(DisplayFunc);
 	glutMotionFunc(MotionFunc);
+    glutPassiveMotionFunc(PassiveMotionFunc);
     glutKeyboardFunc(KeyboardFunc);
     glutSpecialFunc(SpecialFunc);
 

@@ -190,6 +190,21 @@ GLfloat Vector2::distanceSquared(const Vector2& v) const
     return dx*dx + dy*dy;
     }
 
+Vector2 Vector2::rotate(double rad) const
+{    
+    //MATH FROM USER Caspar Kleijne http://stackoverflow.com/questions/4780119/2d-vector-rotation-c
+    GLfloat x = this->vec[0];
+    GLfloat y = this->vec[1];
+    GLfloat px;
+    GLfloat py;
+    px = x * cos(rad) - y * sin(rad); 
+    py = x * sin(rad) + y * cos(rad);
+    
+    Vector2 rotatedVect;
+    rotatedVect.set(px,py);
+    return rotatedVect;
+}
+
 
 void Vector2::drawLine(void) const
     {

@@ -9,6 +9,7 @@
 #define	PLAYER_H
 #import <OpenGL/OpenGL.h>
 #import <GLUT/GLUT.h>
+#include "Model.h"
 #include "VectorLib/Vectors.h"
 
 class Player

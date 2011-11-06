@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4AB291F8146730F5001C9E47 /* Model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AB291F6146730F5001C9E47 /* Model.cpp */; };
 		4AD3A8F9145DE1B800685804 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3A8F8145DE1B800685804 /* main.cpp */; };
 		4AD3A8FB145DE1C600685804 /* highprecisiontime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3A8FA145DE1C600685804 /* highprecisiontime.cpp */; };
 		4AD3A8FF145DE2F400685804 /* Arena.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3A8FD145DE2F400685804 /* Arena.cpp */; };
@@ -35,6 +36,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4AB291F6146730F5001C9E47 /* Model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Model.cpp; sourceTree = "<group>"; };
+		4AB291F7146730F5001C9E47 /* Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
 		4AD3A8EC145DE16400685804 /* MoshBall */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MoshBall; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AD3A8F8145DE1B800685804 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		4AD3A8FA145DE1C600685804 /* highprecisiontime.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = highprecisiontime.cpp; sourceTree = "<group>"; };
@@ -97,6 +100,8 @@
 			isa = PBXGroup;
 			children = (
 				4AD3A8F8145DE1B800685804 /* main.cpp */,
+				4AB291F7146730F5001C9E47 /* Model.h */,
+				4AB291F6146730F5001C9E47 /* Model.cpp */,
 				4AD3A8FE145DE2F400685804 /* Arena.h */,
 				4AD3A8FD145DE2F400685804 /* Arena.cpp */,
 				4AD3A901145DE2FF00685804 /* Ball.h */,
@@ -117,14 +122,14 @@
 		4AD3A912145DE52700685804 /* VectorLib */ = {
 			isa = PBXGroup;
 			children = (
-				4AD3A913145DE52700685804 /* Color.cpp */,
 				4AD3A914145DE52700685804 /* Color.h */,
-				4AD3A915145DE52700685804 /* Vector2.cpp */,
+				4AD3A913145DE52700685804 /* Color.cpp */,
 				4AD3A916145DE52700685804 /* Vector2.h */,
-				4AD3A917145DE52700685804 /* Vector3.cpp */,
+				4AD3A915145DE52700685804 /* Vector2.cpp */,
 				4AD3A918145DE52700685804 /* Vector3.h */,
-				4AD3A919145DE52700685804 /* Vector4.cpp */,
+				4AD3A917145DE52700685804 /* Vector3.cpp */,
 				4AD3A91A145DE52700685804 /* Vector4.h */,
+				4AD3A919145DE52700685804 /* Vector4.cpp */,
 				4AD3A91F145DE57500685804 /* Vectors.h */,
 			);
 			path = VectorLib;
@@ -191,6 +196,7 @@
 				4AD3A91C145DE52700685804 /* Vector2.cpp in Sources */,
 				4AD3A91D145DE52700685804 /* Vector3.cpp in Sources */,
 				4AD3A91E145DE52700685804 /* Vector4.cpp in Sources */,
+				4AB291F8146730F5001C9E47 /* Model.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,6 +284,7 @@
 				4AD3A8F7145DE16400685804 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -8,12 +8,9 @@
 #ifndef	ARENA_H
 #define	ARENA_H
 
-#define ARENA_WIDTH  5280
-#define ARENA_LENGTH 5280
-#define ARENA_HEIGHT 100
-
 #import <OpenGL/OpenGL.h>
 #import <GLUT/GLUT.h>
+#include "Model.h"
 #include "VectorLib/Vectors.h"
 
 class Arena

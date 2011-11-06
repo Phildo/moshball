@@ -8,6 +8,9 @@ Player::Player()
 	if(!compiled) {
         Player::compile();
     }
+    Vector2 newDir;
+    newDir.set(0, -1);
+    setDir(newDir);
 }
 
 

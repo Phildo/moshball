@@ -47,17 +47,53 @@ void Ball::compile()
     if(compiled) return;
     ballList = glGenLists(1);
     glNewList(ballList, GL_COMPILE);
-    gluSphere(gluNewQuadric(),50,50,50);
+    gluSphere(gluNewQuadric(),BALL_RADIUS,50,50);
     glEndList();
     compiled = true;
+}
+
+void Ball::hit()
+{
+    this->active = true;
+    this->timeHit = Model::currTime; //now
+    this->timeLeft = FULL_TIME;
+}
+
+void Ball::unhit()
+{
+    this->active = false;
+    this->timeHit = NULL;
+    this->timeLeft = 0;
+}
+
+void Ball::updateTime()
+{
+    if(active)
+    {
+        timeLeft = FULL_TIME - difftime(Model::currTime, timeHit);
+        if(timeLeft <= 0)
+            unhit();
+    }
+}
+
+void Ball::displayTimer()
+{
+    
 }
 
 void Ball::draw()
 {
     if(!compiled) return;
     Vector3 newCol;
-    if(active) newCol.set((GLfloat)0.5, (GLfloat)1.0, (GLfloat)0.0);
-    else newCol.set((GLfloat)0.5, (GLfloat)1.0, (GLfloat)0.0);
+    if(active) 
+    {
+        newCol.set((GLfloat)0.5, (GLfloat)1.0, (GLfloat)0.0);
+        displayTimer();
+    }    
+    else
+    {
+       newCol.set((GLfloat)0.5, (GLfloat)1.0, (GLfloat)0.0); 
+    }
     setColor(newCol);
     glPushMatrix();
     glTranslated((GLdouble)this->pos[0], (GLdouble)0.0, (GLdouble)this->pos[1]);
