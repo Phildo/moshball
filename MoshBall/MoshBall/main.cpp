@@ -80,19 +80,26 @@ void drawBalls()
 }
 
 //Called when mouse dragged (sets mouseX and mouseY from -1 to 1)
-//(only needs to 'look' correct)
-void MotionFunc(int x, int y)
-{
-	//mouseX = -2.0*(x-(width/2.0))/width;
-	//mouseY = 2.0*(y-(height/2.0))/height;
-}
-
-//Called when mouse dragged (sets mouseX and mouseY from -1 to 1)
-//(only needs to 'look' correct)
 void PassiveMotionFunc(int x, int y)
 {
-	mouseX = -2.0*(x-(width/2.0))/width;
-	mouseY = 2.0*(y-(height/2.0))/height;
+	mouseX = (-2.0*x/width)+1.0;
+    //Create 'go straight' zone between -.1 and .1
+    if(mouseX > 0.1)
+        mouseX-=0.1;
+    else if(mouseX < -0.1)
+        mouseX+=0.1;
+    else
+        mouseX = 0;
+    
+	mouseY = (2.0*y/height)-1.0;
+    //Create 'turn only' zone between -.1 and .1
+    if(mouseY > 0.1)
+        mouseY-=0.1;
+    else if(mouseY < -0.1)
+        mouseY+=0.1;
+    else
+        mouseY = 0;
+    
 }
 
 void updatePlayer(double timePassed)
@@ -100,32 +107,29 @@ void updatePlayer(double timePassed)
     player->setDir(player->getDir().rotate(mouseX*-1*timePassed));
     player->setVel(mouseY*-1000);
     Vector2 newPos  = player->getPos()+(player->getDir()*(player->getVel()*timePassed));
-    
-    Vector2 temp = player->getDir();
-    Vector2 temp2 = player->getPos();
+        
     //Check wall collision
     collision = false;
-    if(newPos[0] < ARENA_WIDTH*-.5+BALL_RADIUS)
-    {
-        player->setDir(player->getDir().reflectOverVector(Model::SouthVect));
-        collision = true;
-    }
-    else if(newPos[0] > ARENA_WIDTH*.5-BALL_RADIUS)
+    if(newPos[1] < ARENA_LENGTH*-.5+BALL_RADIUS)
     {
         player->setDir(player->getDir().reflectOverVector(Model::NorthVect));
         collision = true;
     }
-    else if(newPos[1] < ARENA_LENGTH*-.5+BALL_RADIUS)
+    else if(newPos[1] > ARENA_LENGTH*.5-BALL_RADIUS)
     {
-        player->setDir(player->getDir().reflectOverVector(Model::EastVect));
+        player->setDir(player->getDir().reflectOverVector(Model::SouthVect));
         collision = true;
     }
-    else if(newPos[1] > ARENA_LENGTH*.5-BALL_RADIUS)
+    else if(newPos[0] < ARENA_WIDTH*-.5+BALL_RADIUS)
     {
         player->setDir(player->getDir().reflectOverVector(Model::WestVect));
         collision = true;
     }
-    temp = player->getDir();
+    else if(newPos[0] > ARENA_WIDTH*.5-BALL_RADIUS)
+    {
+        player->setDir(player->getDir().reflectOverVector(Model::EastVect));
+        collision = true;
+    }
     
     if(collision == true)
     {
@@ -134,7 +138,6 @@ void updatePlayer(double timePassed)
     
     player->setPos(newPos);
 
-    temp2 = player->getPos();
 
 }
 
@@ -250,7 +253,6 @@ int main(int argc, char * argv[])
 	glutDisplayFunc(DisplayFunc);
 	glutReshapeFunc(ReshapeFunc);
 	glutIdleFunc(IdleFunc);
-	glutMotionFunc(MotionFunc);
     glutPassiveMotionFunc(PassiveMotionFunc);
     glutKeyboardFunc(KeyboardFunc);
     glutSpecialFunc(SpecialFunc);

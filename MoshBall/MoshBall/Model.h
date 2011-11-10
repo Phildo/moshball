@@ -13,7 +13,7 @@
 #define ARENA_HEIGHT 100
 
 #define NUM_MODES 2
-#define NUM_BALLS 100
+#define NUM_BALLS 10
 #define SEED 0
 
 #define BALL_RADIUS 50
