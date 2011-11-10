@@ -42,6 +42,15 @@ void Ball::setColor(const Vector3 & newColor)
     diffuse[3] = 1.0f;
 }
 
+void Ball::checkCollisionWithPlayer(Player * p)
+{
+    if(p->getPos()[0] > this->pos[0]-BALL_RADIUS && p->getPos()[0] < this->pos[0]+BALL_RADIUS &&
+       p->getPos()[1] > this->pos[1]-BALL_RADIUS && p->getPos()[1] < this->pos[1]+BALL_RADIUS)
+    {
+        //SET PLAYER DIR AND POS
+    }
+}
+
 void Ball::compile()
 {
     if(compiled) return;

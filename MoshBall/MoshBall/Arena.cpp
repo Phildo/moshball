@@ -28,12 +28,6 @@ void Arena::compile()
     glBegin(GL_TRIANGLES);
     
     //Floor
-    glNormal3d(0.0, -1.0, 0.0);
-    
-    glVertex3d(1.0, 0.0, -5.0);
-    glVertex3d(0.0, 0.0, -5.0);
-    glVertex3d(1.0, 1.0, -10.0);
-    /*
     glVertex3d(-.5*ARENA_WIDTH, -.5*ARENA_HEIGHT, -.5*ARENA_LENGTH);
     glVertex3d(.5*ARENA_WIDTH, -.5*ARENA_HEIGHT, .5*ARENA_LENGTH);
     glVertex3d(.5*ARENA_WIDTH, -.5*ARENA_HEIGHT, -.5*ARENA_LENGTH);
@@ -41,7 +35,6 @@ void Arena::compile()
     glVertex3d(-.5*ARENA_WIDTH, -.5*ARENA_HEIGHT, -.5*ARENA_LENGTH);
     glVertex3d(-.5*ARENA_WIDTH, -.5*ARENA_HEIGHT, .5*ARENA_LENGTH);
     glVertex3d(.5*ARENA_WIDTH, -.5*ARENA_HEIGHT, .5*ARENA_LENGTH);
-     */
     
     //West Wall
     glNormal3d(1.0, 0.0, 0.0);

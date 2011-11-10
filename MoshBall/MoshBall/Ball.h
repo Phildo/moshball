@@ -12,6 +12,7 @@
 #import <GLUT/GLUT.h>
 #include <time.h>
 #include "Model.h"
+#include "Player.h"
 #include "VectorLib/Vectors.h"
 #include "Timer.h"
 
@@ -28,6 +29,8 @@ public:
     void unhit();
     void updateTime();
     void setColor(const Vector3 & color);
+    
+    void checkCollisionWithPlayer(Player * p);
     
     void compile();
 	void draw();

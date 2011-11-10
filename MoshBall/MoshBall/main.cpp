@@ -52,25 +52,6 @@ void initGame()
     }
 }
 
-//Draws the xyz axis at current frame of reference
-void drawAxis(double size)
-{
-	glPushMatrix();
-
-	//z
-	gluCylinder(gluNewQuadric(),0.01*size,0.01*size,1*size,10,1);
-
-	//y
-	glRotatef(-90, 1.0f, 0.0f, 0.0f);
-	gluCylinder(gluNewQuadric(),0.01*size,0.01*size,1*size,10,1);
-
-	//x
-	glRotatef(90, 0.0f, 1.0f, 0.0f);
-	gluCylinder(gluNewQuadric(),0.01*size,0.01*size,1*size,10,1);
-
-	glPopMatrix();
-}
-
 void drawBalls()
 {
     for(int i = 0; i < NUM_BALLS; i++)
@@ -99,16 +80,10 @@ void PassiveMotionFunc(int x, int y)
         mouseY+=0.1;
     else
         mouseY = 0;
-    
 }
 
-void updatePlayer(double timePassed)
+bool checkWallCollisions(const Vector2 & newPos)
 {
-    player->setDir(player->getDir().rotate(mouseX*-1*timePassed));
-    player->setVel(mouseY*-1000);
-    Vector2 newPos  = player->getPos()+(player->getDir()*(player->getVel()*timePassed));
-        
-    //Check wall collision
     collision = false;
     if(newPos[1] < ARENA_LENGTH*-.5+BALL_RADIUS)
     {
@@ -131,7 +106,31 @@ void updatePlayer(double timePassed)
         collision = true;
     }
     
-    if(collision == true)
+    return collision;
+}
+
+bool checkBallCollisions(const Vector2 & newPos)
+{
+    collision = false;
+    for(int i = 0; i < NUM_BALLS; i++)
+    {
+        bArray[i]->checkCollisionWithPlayer(player);
+    }
+    return collision;
+}
+
+void updatePlayer(double timePassed)
+{
+    player->setDir(player->getDir().rotate(mouseX*-1*timePassed));
+    player->setVel(mouseY*-100);
+    Vector2 newPos  = player->getPos()+(player->getDir()*(player->getVel()*timePassed));
+            
+    if(checkWallCollisions(newPos))
+    {
+        newPos  = player->getPos()+(player->getDir()*(player->getVel()*timePassed));
+    }
+    
+    if(checkBallCollisions(newPos))
     {
         newPos  = player->getPos()+(player->getDir()*(player->getVel()*timePassed));
     }
@@ -167,25 +166,14 @@ void DisplayFunc()
 	glLoadIdentity();
 
 	//Set camera to look relative to position of mouse on screen
-	//gluLookAt(0.0f,0.0f,-5.0f,mouseX*10,mouseY*10,-10.0f,0.0f,1.0f,0.0f);
     gluLookAt(player->getPos()[0], 0.0, player->getPos()[1], player->getPos()[0]+player->getDir()[0], 0.0, player->getPos()[1]+player->getDir()[1], 0.0, 1.0, 0.0);
 
 	//Aim Light
-    GLfloat pos[4] = {0.0f, 10.0f, 0.0f, 1.0f};
+    GLfloat pos[4] = {player->getPos()[0], 10.0f, player->getPos()[1], 1.0f};
     glLightfv(GL_LIGHT0, GL_POSITION, pos);
-
-	//Enable depth, lighting, and fog ONLY AFTER stars are drawn
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_LIGHTING);
-    //glEnable(GL_FOG);
 
 	arena->draw();
     drawBalls();
-
-	//Disable depth, lighting, and fog for stars to be drawn next time
-    glDisable(GL_DEPTH_TEST);
-    glDisable(GL_LIGHTING);
-    //glDisable(GL_FOG);
 
 	//DoubleBuffering
 	glutSwapBuffers();
@@ -233,21 +221,12 @@ int main(int argc, char * argv[])
 	glutCreateWindow("Moshball");
     
 	//One-Time setups
-    glDepthFunc(GL_LEQUAL);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
-    glShadeModel(GL_FLAT);
     glEnable(GL_NORMALIZE);
-    
-	//Fog data
-    /*
-    float fogColor[] = { 0.0f, 0.0f, 0.0f, 1 };
-    glFogfv(GL_FOG_COLOR, fogColor);
-	glFogf(GL_FOG_START, 500);
-	glFogf(GL_FOG_END, 1000);
-    glFogf (GL_FOG_DENSITY, 0.9f);
-    glHint (GL_FOG_HINT, GL_FASTEST);
-    glFogi(GL_FOG_MODE, GL_LINEAR);
-     */
+    glDepthFunc(GL_LEQUAL);
+    glShadeModel(GL_SMOOTH);
 	
     //Callback Functions
 	glutDisplayFunc(DisplayFunc);

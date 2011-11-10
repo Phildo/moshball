@@ -51,40 +51,12 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "MoshBall/main.cpp"
-         timestampString = "342585286.208045"
+         timestampString = "342585459.372894"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "171"
-         endingLineNumber = "171"
+         startingLineNumber = "170"
+         endingLineNumber = "170"
          landmarkName = "DisplayFunc()"
-         landmarkType = "7">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "MoshBall/main.cpp"
-         timestampString = "342585286.208045"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "115"
-         endingLineNumber = "115"
-         landmarkName = "updatePlayer(double timePassed)"
-         landmarkType = "7">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "MoshBall/main.cpp"
-         timestampString = "342585286.208045"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "120"
-         endingLineNumber = "120"
-         landmarkName = "updatePlayer(double timePassed)"
          landmarkType = "7">
       </FileBreakpoint>
       <FileBreakpoint
@@ -107,25 +79,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "MoshBall/main.cpp"
-         timestampString = "342585286.208045"
+         timestampString = "342586877.920931"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "136"
-         endingLineNumber = "136"
-         landmarkName = "updatePlayer(double timePassed)"
-         landmarkType = "7">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "MoshBall/main.cpp"
-         timestampString = "342585286.208045"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "116"
-         endingLineNumber = "116"
+         startingLineNumber = "130"
+         endingLineNumber = "130"
          landmarkName = "updatePlayer(double timePassed)"
          landmarkType = "7">
       </FileBreakpoint>
@@ -142,6 +100,46 @@
          endingLineNumber = "137"
          landmarkName = "updatePlayer(double timePassed)"
          landmarkType = "7">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "MoshBall/Ball.cpp"
+         timestampString = "342586584.967624"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "45"
+         endingLineNumber = "45">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "MoshBall/Ball.cpp"
+         timestampString = "342586779.833602"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "47"
+         endingLineNumber = "47"
+         landmarkName = "Ball::checkCollisionWithPlayer(Player * p)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "MoshBall/Ball.cpp"
+         timestampString = "342586875.909308"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "50"
+         endingLineNumber = "50"
+         landmarkName = "Ball::checkCollisionWithPlayer(Player * p)"
+         landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>
