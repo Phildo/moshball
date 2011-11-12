@@ -30,7 +30,7 @@ public:
     void updateTime();
     void setColor(const Vector3 & color);
     
-    void checkCollisionWithPlayer(Player * p);
+    bool checkCollisionWithPlayer(Player * p);
     
     void compile();
 	void draw();

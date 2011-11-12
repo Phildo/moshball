@@ -42,13 +42,15 @@ void Ball::setColor(const Vector3 & newColor)
     diffuse[3] = 1.0f;
 }
 
-void Ball::checkCollisionWithPlayer(Player * p)
+bool Ball::checkCollisionWithPlayer(Player * p)
 {
-    if(p->getPos()[0] > this->pos[0]-BALL_RADIUS && p->getPos()[0] < this->pos[0]+BALL_RADIUS &&
-       p->getPos()[1] > this->pos[1]-BALL_RADIUS && p->getPos()[1] < this->pos[1]+BALL_RADIUS)
+    if(p->getPos()[0] > this->pos[0]-(BALL_RADIUS*2) && p->getPos()[0] < this->pos[0]+(BALL_RADIUS*2) &&
+       p->getPos()[1] > this->pos[1]-(BALL_RADIUS*2) && p->getPos()[1] < this->pos[1]+(BALL_RADIUS*2))
     {
-        //SET PLAYER DIR AND POS
+        p->setDir(p->getDir().reflectOverVector((this->pos-p->getPos())).rotate(2/3.1415));
+        return true;
     }
+    return false;
 }
 
 void Ball::compile()
@@ -104,6 +106,10 @@ void Ball::draw()
        newCol.set((GLfloat)0.5, (GLfloat)1.0, (GLfloat)0.0); 
     }
     setColor(newCol);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
+    glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);  
+    glColor3d(color[0], color[1], color[2]);
     glPushMatrix();
     glTranslated((GLdouble)this->pos[0], (GLdouble)0.0, (GLdouble)this->pos[1]);
     glCallList(ballList);

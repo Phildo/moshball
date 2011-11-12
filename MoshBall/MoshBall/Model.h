@@ -13,8 +13,10 @@
 #define ARENA_HEIGHT 100
 
 #define NUM_MODES 2
-#define NUM_BALLS 10
+#define NUM_BALLS 50
 #define SEED 0
+
+#define MOVEMENT_TOLERANCE .05
 
 #define BALL_RADIUS 50
 #define FULL_TIME (30+(NUM_BALLS*2))

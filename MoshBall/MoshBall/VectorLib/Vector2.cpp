@@ -213,6 +213,7 @@ Vector2 Vector2::reflectOverVector(const Vector2& norm) const
     
     reflectedVect.set(this->vec[0], this->vec[1]);
     reflectedVect = (norm*-2*(reflectedVect.dot(norm)))+reflectedVect;
+    reflectedVect.normalize();
     return reflectedVect;
 }
 

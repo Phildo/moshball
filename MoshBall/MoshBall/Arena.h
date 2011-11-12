@@ -22,12 +22,19 @@ public:
     double getWidth();
     double getLength();
     
+    void setColor(const Vector3 & newColor);
+    
     void compile();
 	void draw();
     
 protected:
     static GLuint arenaList;
     static bool compiled;
+    
+    Vector3 color;
+    GLfloat specular[4];
+    GLfloat ambient[4];
+    GLfloat diffuse[4];
 };
 
 #endif

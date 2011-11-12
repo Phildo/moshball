@@ -84,6 +84,18 @@ void Player::compile()
 void Player::draw()
 {
     if(!compiled) return;
+    
+    Vector3 col;
+    col.set(1.0, 0.0, 0.0);
+    setColor(col);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
+    glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);  
+    glColor3d(color[0], color[1], color[2]);
+    glPushMatrix();
+    glTranslated((GLdouble)this->pos[0], (GLdouble)0.0, (GLdouble)this->pos[1]);
     glCallList(playerList);
+    glPopMatrix();
+
 }
 
