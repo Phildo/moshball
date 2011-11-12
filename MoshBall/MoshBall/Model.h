@@ -16,7 +16,7 @@
 #define NUM_BALLS 50
 #define SEED 0
 
-#define MOVEMENT_TOLERANCE .05
+#define MOVEMENT_TOLERANCE .025
 
 #define BALL_RADIUS 50
 #define FULL_TIME (30+(NUM_BALLS*2))

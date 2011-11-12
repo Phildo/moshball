@@ -48,6 +48,7 @@ bool Ball::checkCollisionWithPlayer(Player * p)
        p->getPos()[1] > this->pos[1]-(BALL_RADIUS*2) && p->getPos()[1] < this->pos[1]+(BALL_RADIUS*2))
     {
         p->setDir(p->getDir().reflectOverVector((this->pos-p->getPos())).rotate(2/3.1415));
+        this->hit();
         return true;
     }
     return false;
@@ -58,7 +59,7 @@ void Ball::compile()
     if(compiled) return;
     ballList = glGenLists(1);
     glNewList(ballList, GL_COMPILE);
-    gluSphere(gluNewQuadric(),BALL_RADIUS,50,50);
+    gluSphere(gluNewQuadric(),BALL_RADIUS,10,10);
     glEndList();
     compiled = true;
 }
@@ -98,7 +99,7 @@ void Ball::draw()
     Vector3 newCol;
     if(active) 
     {
-        newCol.set((GLfloat)0.5, (GLfloat)1.0, (GLfloat)0.0);
+        newCol.set((GLfloat)1.0, (GLfloat)0.0, (GLfloat)0.0);
         displayTimer();
     }    
     else
