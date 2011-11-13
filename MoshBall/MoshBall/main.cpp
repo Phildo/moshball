@@ -138,30 +138,51 @@ void collide(Movable *a, Movable *b, double ir)
     double effectOnB = ir;
     Vector3 perfectReflectionOffB = a->dir.bounceOffNormal(b->pos-a->pos);
     Vector3 perfectReflectionOffA = b->dir.bounceOffNormal(a->pos-b->pos);
-    
+    perfectReflectionOffB.normalize();
+    perfectReflectionOffA.normalize();
+    a->dir = a->dir.interpolateVect3(perfectReflectionOffB, effectOnA);
+    b->dir = b->dir.interpolateVect3(perfectReflectionOffA, effectOnB);
+    a->dir.normalize();
+    b->dir.normalize();
 }
 
 bool checkWallCollisions(const Vector3 & newPos)
 {
     bool collision = false;
+    //North Wall
     if(newPos[2] < ARENA_LENGTH*-.5+BALL_RADIUS)
     {
-        player->dir = player->dir.bounceOffNormal(Model::SouthVect);
+        arena->pos.set(player->pos[0], 0.0, -ARENA_LENGTH);
+        arena->dir = Model::SouthVect;
+        arena->vel = 0;
+        collide(player, arena, 0);
         collision = true;
     }
+    //South Wall
     else if(newPos[2] > ARENA_LENGTH*.5-BALL_RADIUS)
     {
-        player->dir = player->dir.bounceOffNormal(Model::NorthVect);
+        arena->pos.set(player->pos[0], 0.0, ARENA_LENGTH);
+        arena->dir = Model::NorthVect;
+        arena->vel = 0;
+        collide(player, arena, 0);
         collision = true;
     }
+    //West Wall
     else if(newPos[0] < ARENA_WIDTH*-.5+BALL_RADIUS)
     {
-        player->dir = player->dir.bounceOffNormal(Model::EastVect);
+        arena->pos.set(-ARENA_WIDTH, 0.0, player->pos[2]);
+        arena->dir = Model::EastVect;
+        arena->vel = 0;
+        collide(player, arena, 0);
         collision = true;
     }
+    //East Wall
     else if(newPos[0] > ARENA_WIDTH*.5-BALL_RADIUS)
     {
-        player->dir = player->dir.bounceOffNormal(Model::WestVect);
+        arena->pos.set(ARENA_WIDTH, 0.0, player->pos[2]);
+        arena->dir = Model::WestVect;
+        arena->vel = 0;
+        collide(player, arena, 0);
         collision = true;
     }
     
@@ -187,17 +208,10 @@ void updatePlayer(double timePassed)
     player->vel = mouseY*-SPEED;
     Vector3 newPos  = player->pos+(player->dir*(player->vel*timePassed));
     
-    if(checkWallCollisions(newPos))
-    {
-        newPos  = player->pos+(player->dir*(player->vel*timePassed));
-    }
-    
-    if(checkBallCollisions(newPos))
-    {
-        newPos  = player->pos+(player->dir*(player->vel*timePassed));
-    }
-    
-    player->pos = newPos;
+    checkWallCollisions(newPos);
+    checkBallCollisions(newPos);
+    player->updatePos(timePassed);
+
 }
 
 void updateBalls(double timePassed)

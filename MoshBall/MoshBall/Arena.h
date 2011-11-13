@@ -14,7 +14,7 @@
 #include "VectorLib/Vectors.h"
 #include "DrawableGeometry.h"
 
-class Arena: public DrawableGeometry
+class Arena: public DrawableGeometry, public Movable
 {
 public:    
 	Arena();

@@ -228,6 +228,13 @@ Vector3 Vector3::bounceOffNormal(const Vector3& nv) const
     return this->rotateAroundVect3(nv, 180.0)*-1;
 }
 
+Vector3 Vector3::interpolateVect3(const Vector3 & iv, double t) const
+{
+    return Vector3(t*(iv.vec[0]-this->vec[0])+this->vec[0],
+                   t*(iv.vec[1]-this->vec[1])+this->vec[1],
+                   t*(iv.vec[2]-this->vec[2])+this->vec[2]);
+}
+
 void Vector3::drawLine(void) const
 {
     glBegin(GL_LINES);

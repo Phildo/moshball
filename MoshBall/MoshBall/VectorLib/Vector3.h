@@ -43,8 +43,9 @@ public:
     GLfloat distance(const Vector3& v) const;
     GLfloat distanceSquared(const Vector3& v) const;
     
-    Vector3 rotateAroundVect3(const Vector3& v, double deg) const;
-    Vector3 bounceOffNormal(const Vector3& v) const;
+    Vector3 rotateAroundVect3(const Vector3& rav, double deg) const;
+    Vector3 bounceOffNormal(const Vector3& nv) const;
+    Vector3 interpolateVect3(const Vector3 & iv, double t) const;
     
     void drawLine(void) const;
     
