@@ -23,6 +23,7 @@
 		4AD3A91E145DE52700685804 /* Vector4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3A919145DE52700685804 /* Vector4.cpp */; };
 		4AD3A92A145DF97000685804 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AD3A928145DF97000685804 /* OpenGL.framework */; };
 		4AD3A92B145DF97000685804 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AD3A929145DF97000685804 /* GLUT.framework */; };
+		4ADB27E5147055B200FF5C77 /* Arrow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB27E3147055B200FF5C77 /* Arrow.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -69,6 +70,8 @@
 		4AD3A91F145DE57500685804 /* Vectors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vectors.h; sourceTree = "<group>"; };
 		4AD3A928145DF97000685804 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenGL.framework; sourceTree = "<group>"; };
 		4AD3A929145DF97000685804 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GLUT.framework; sourceTree = "<group>"; };
+		4ADB27E3147055B200FF5C77 /* Arrow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Arrow.cpp; sourceTree = "<group>"; };
+		4ADB27E4147055B200FF5C77 /* Arrow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Arrow.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +121,8 @@
 				4AD3A900145DE2FF00685804 /* Ball.cpp */,
 				4AD3A904145DE30800685804 /* Player.h */,
 				4AD3A903145DE30800685804 /* Player.cpp */,
+				4ADB27E4147055B200FF5C77 /* Arrow.h */,
+				4ADB27E3147055B200FF5C77 /* Arrow.cpp */,
 				4AD3A907145DE31300685804 /* Jumbotron.h */,
 				4AD3A906145DE31300685804 /* Jumbotron.cpp */,
 				4AD3A90A145DE33600685804 /* Timer.h */,
@@ -209,6 +214,7 @@
 				4AB291F8146730F5001C9E47 /* Model.cpp in Sources */,
 				4A42F44A146F82F5006384BA /* Movable.cpp in Sources */,
 				4A42F44E146F8304006384BA /* DrawableGeometry.cpp in Sources */,
+				4ADB27E5147055B200FF5C77 /* Arrow.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

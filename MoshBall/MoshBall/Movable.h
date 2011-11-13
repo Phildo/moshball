@@ -8,6 +8,7 @@
 #ifndef	MOVABLE_H
 #define	MOVABLE_H
 
+#include <math.h>
 #include "VectorLib/Vectors.h"
 
 class Movable

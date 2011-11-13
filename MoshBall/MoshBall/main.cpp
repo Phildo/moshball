@@ -15,7 +15,8 @@ static int height, width;
 
 Player * player;
 Arena * arena;
-Ball * balls[NUM_BALLS];
+Ball ** balls;
+Arrow * compass;
 
 /*
  * HELPER FUNCTIONS
@@ -60,6 +61,7 @@ void renderSelf(bool withSelf)
     if(withSelf) player->drawAtPosition();
     else drawCrosshair();
     drawBalls();
+    compass->draw();
 }
 
 void drawMain()
@@ -99,7 +101,7 @@ void drawHud()
     glClear(GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(30, ((double) width) / ((double) height), 1.0f, 10000000.0);
+    gluPerspective(30, ((double) width) / ((double) height), 1.0f, 100000.0);
     glViewport(hudLeft, hudBottom, hudWidth, hudHeight);
     
     glMatrixMode(GL_MODELVIEW);
@@ -144,62 +146,68 @@ void collide(Movable *a, Movable *b, double ir)
     b->dir = b->dir.interpolateVect3(perfectReflectionOffA, effectOnB);
     a->dir.normalize();
     b->dir.normalize();
+    
+    //NON-ROBUST FIX FOR THIS GAME ONLY
+    a->dir[1] = 0;
+    b->dir[1] = 0;
 }
 
-bool checkWallCollisions(const Vector3 & newPos)
+void checkWallCollisions(Movable * m, const Vector3 & newPos)
 {
-    bool collision = false;
     //North Wall
     if(newPos[2] < ARENA_LENGTH*-.5+BALL_RADIUS)
     {
-        arena->pos.set(player->pos[0], 0.0, -ARENA_LENGTH);
+        arena->pos.set(m->pos[0], 0.0, -ARENA_LENGTH);
         arena->dir = Model::SouthVect;
         arena->vel = 0;
-        collide(player, arena, 0);
-        collision = true;
+        collide(m, arena, 0);
     }
     //South Wall
     else if(newPos[2] > ARENA_LENGTH*.5-BALL_RADIUS)
     {
-        arena->pos.set(player->pos[0], 0.0, ARENA_LENGTH);
+        arena->pos.set(m->pos[0], 0.0, ARENA_LENGTH);
         arena->dir = Model::NorthVect;
         arena->vel = 0;
-        collide(player, arena, 0);
-        collision = true;
+        collide(m, arena, 0);
     }
     //West Wall
     else if(newPos[0] < ARENA_WIDTH*-.5+BALL_RADIUS)
     {
-        arena->pos.set(-ARENA_WIDTH, 0.0, player->pos[2]);
+        arena->pos.set(-ARENA_WIDTH, 0.0, m->pos[2]);
         arena->dir = Model::EastVect;
         arena->vel = 0;
-        collide(player, arena, 0);
-        collision = true;
+        collide(m, arena, 0);
     }
     //East Wall
     else if(newPos[0] > ARENA_WIDTH*.5-BALL_RADIUS)
     {
-        arena->pos.set(ARENA_WIDTH, 0.0, player->pos[2]);
+        arena->pos.set(ARENA_WIDTH, 0.0, m->pos[2]);
         arena->dir = Model::WestVect;
         arena->vel = 0;
-        collide(player, arena, 0);
-        collision = true;
+        collide(m, arena, 0);
     }
-    
-    return collision;
 }
 
-bool checkBallCollisions(const Vector3 & newPos)
+void checkBallCollisions(const Vector3 & newPos)
 {
-    return false;
-    bool collision = false;
     for(int i = 0; i < NUM_BALLS; i++)
     {
-        collision = balls[i]->checkCollisionWithPlayer(player);
-        if(collision)
-            return true;
+        if(balls[i]->checkCollisionWithMovable(player))
+            collide(player, balls[i], .5);
     }
-    return false;
+}
+
+void updateBalls(double timePassed)
+{
+    for(int i = 0; i < NUM_BALLS; i++)
+    {
+        //player->vel = mouseY*-SPEED;
+        Vector3 newPos  = balls[i]->pos+(balls[i]->dir*(balls[i]->vel*timePassed));
+        
+        checkWallCollisions(balls[i], newPos);
+        //checkBallCollisions(newPos);
+        balls[i]->updatePos(timePassed);
+    }
 }
 
 void updatePlayer(double timePassed)
@@ -208,16 +216,12 @@ void updatePlayer(double timePassed)
     player->vel = mouseY*-SPEED;
     Vector3 newPos  = player->pos+(player->dir*(player->vel*timePassed));
     
-    checkWallCollisions(newPos);
+    checkWallCollisions(player, newPos);
     checkBallCollisions(newPos);
     player->updatePos(timePassed);
-
 }
 
-void updateBalls(double timePassed)
-{
-    
-}
+
 
 
 
@@ -356,8 +360,10 @@ void initGame()
     srand(SEED);
     
     Model::setUpModel();
-    arena = new Arena();
-    player = new Player();
+    player = Model::player;
+    arena = Model::arena;
+    balls = Model::balls;
+    compass = Model::compass;
     allocBalls();
 }
 

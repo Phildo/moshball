@@ -12,13 +12,10 @@
 #import <GLUT/GLUT.h>
 #include <time.h>
 #include "Model.h"
-#include "Player.h"
 #include "VectorLib/Vectors.h"
 #include "Movable.h"
 #include "DrawableGeometry.h"
 #include "Timer.h"
-
-class Player;
 
 class Ball: public Movable, public DrawableGeometry
 {
@@ -36,7 +33,7 @@ public:
     void updateTime();
     void displayTimer();
     
-    bool checkCollisionWithPlayer(Player * p);
+    bool checkCollisionWithMovable(Movable * m);
     
 protected:
     bool active;

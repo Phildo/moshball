@@ -10,7 +10,7 @@ Ball::Ball()
     }
     pos.set(0.0,0.0,0.0);
     dir.set(0.0,0.0,-1.0);
-    vel = 0;
+    vel = 100;
     unhit();
 }
 
@@ -50,12 +50,12 @@ void Ball::drawAtPosition()
 }
 
 
-bool Ball::checkCollisionWithPlayer(Player * p)
+bool Ball::checkCollisionWithMovable(Movable * m)
 {
-    if(p->pos[0] > this->pos[0]-(BALL_RADIUS*2) && p->pos[0] < this->pos[0]+(BALL_RADIUS*2) &&
-       p->pos[1] > this->pos[1]-(BALL_RADIUS*2) && p->pos[1] < this->pos[1]+(BALL_RADIUS*2))
+    if(m->pos[0] > this->pos[0]-(BALL_RADIUS*2) && m->pos[0] < this->pos[0]+(BALL_RADIUS*2) &&
+       m->pos[1] > this->pos[1]-(BALL_RADIUS*2) && m->pos[1] < this->pos[1]+(BALL_RADIUS*2) &&
+       m->pos[2] > this->pos[2]-(BALL_RADIUS*2) && m->pos[2] < this->pos[2]+(BALL_RADIUS*2))
     {
-        p->dir = p->dir.bounceOffNormal(this->pos-p->pos);
         this->hit();
         return true;
     }
@@ -67,7 +67,7 @@ void Ball::hit()
     this->active = true;
     this->timeHit = Model::currTime; //now
     this->timeLeft = FULL_TIME;
-    setColor(9.0, 0.0, 0.0, 1.0, 0.5, 1.0, 1.0);
+    setColor(1.0, 0.0, 0.0, 1.0, 0.5, 1.0, 1.0);
 }
 
 void Ball::unhit()

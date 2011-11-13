@@ -12,8 +12,12 @@
 #define ARENA_LENGTH 5280
 #define ARENA_HEIGHT 100
 
+#define COMPASS_DISTANCE 3750
+#define HUD_WIDTH COMPASS_DISTANCE*2+100
+#define HUD_HEIGHT COMPASS_DISTANCE*2+100
+
 #define NUM_MODES 2
-#define NUM_BALLS 50
+#define NUM_BALLS 0
 #define SEED 0
 
 #define MOVEMENT_TOLERANCE .025
@@ -27,16 +31,23 @@
 #include "Player.h"
 #include "Ball.h"
 #include "Arena.h"
+#include "Arrow.h"
 #include "highprecisiontime.h"
 
 class Player;
 class Ball;
 class Arena;
+class Arrow;
 
 class Model{
 public:
     
     static HighPrecisionTime *hTime;
+    
+    static Player *player;
+    static Ball **balls;
+    static Arena *arena;
+    static Arrow *compass;
     
     static time_t currTime;
     static Vector3 UpVect;
