@@ -12,29 +12,20 @@
 #import <GLUT/GLUT.h>
 #include "Model.h"
 #include "VectorLib/Vectors.h"
+#include "DrawableGeometry.h"
 
-class Arena
+class Arena: public DrawableGeometry
 {
 public:    
 	Arena();
     ~Arena();
-
-    double getWidth();
-    double getLength();
     
-    void setColor(const Vector3 & newColor);
-    
-    void compile();
-	void draw();
+    void compileDL();
+    void draw();
     
 protected:
-    static GLuint arenaList;
     static bool compiled;
-    
-    Vector3 color;
-    GLfloat specular[4];
-    GLfloat ambient[4];
-    GLfloat diffuse[4];
+    static GLuint displayList;
 };
 
 #endif

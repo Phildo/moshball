@@ -8,17 +8,21 @@
 
 #include "Model.h"
 time_t Model::currTime;
-Vector2 Model::NorthVect;
-Vector2 Model::SouthVect;
-Vector2 Model::WestVect;
-Vector2 Model::EastVect;
+Vector3 Model::UpVect;
+Vector3 Model::DownVect;
+Vector3 Model::NorthVect;
+Vector3 Model::SouthVect;
+Vector3 Model::WestVect;
+Vector3 Model::EastVect;
 
 void Model::setUpModel()
 {
-    NorthVect.set(0, -1);
-    SouthVect.set(0, 1);
-    WestVect.set(-1, 0);
-    EastVect.set(1, 0);
+    UpVect.set   ( 0, 1, 0);
+    DownVect.set ( 0,-1, 0);
+    NorthVect.set( 0, 0,-1);
+    SouthVect.set( 0, 0, 1);
+    WestVect.set (-1, 0, 0);
+    EastVect.set ( 1, 0, 0);
 }
 
 void Model::updateTime()

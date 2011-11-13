@@ -11,40 +11,22 @@
 #import <GLUT/GLUT.h>
 #include "Model.h"
 #include "VectorLib/Vectors.h"
+#include "Movable.h"
+#include "DrawableGeometry.h"
 
-class Player
+class Player: public Movable, public DrawableGeometry
 {
 public:    
 	Player();
     ~Player();
     
-    void setPos(const Vector2 & newPos);
-    Vector2 getPos();
-    
-    void setDir(const Vector2 & newDir);
-    Vector2 getDir();
-    
-    void setVel(double newVel);
-    double getVel();
-    
-    void updatePos(double elapsedTime);
-    
-    void setColor(const Vector3 & color);
-    
-    void compile();
-	void draw();
+    void compileDL(); 
+    void draw();
+    void drawAtPosition();
     
 protected:
-    static GLuint playerList;
     static bool compiled;
-    Vector2 pos;
-    Vector2 dir;
-    double vel;
-    
-    Vector3 color;
-    GLfloat specular[4];
-    GLfloat ambient[4];
-    GLfloat diffuse[4];
+    static GLuint displayList;
 };
 
 #endif

@@ -14,42 +14,38 @@
 #include "Model.h"
 #include "Player.h"
 #include "VectorLib/Vectors.h"
+#include "Movable.h"
+#include "DrawableGeometry.h"
 #include "Timer.h"
 
-class Ball
+class Player;
+
+class Ball: public Movable, public DrawableGeometry
 {
 public:    
 	Ball();
     ~Ball();
-    
-    void setPos(const Vector2 & newPos);
-    Vector2 getPos();
+   
+    void compileDL();
+    void draw();
+    void drawAtPosition();
     
     void hit();
     void unhit();
+    
     void updateTime();
-    void setColor(const Vector3 & color);
+    void displayTimer();
     
     bool checkCollisionWithPlayer(Player * p);
     
-    void compile();
-	void draw();
-    void displayTimer();
-    
 protected:
-    static GLuint ballList;
-    static bool compiled;
-    
-    Vector2 pos;
     bool active;
     double timeLeft;
     time_t timeHit;
     Timer timerDisp;
     
-    Vector3 color;
-    GLfloat specular[4];
-    GLfloat ambient[4];
-    GLfloat diffuse[4];
+    static bool compiled;
+    static GLuint displayList;
 };
 
 #endif

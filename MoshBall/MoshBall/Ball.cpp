@@ -1,67 +1,65 @@
 #include "Ball.h"
 
-GLuint Ball::ballList;
-bool Ball::compiled = false;
+bool Ball::compiled;
+GLuint Ball::displayList;
 
 Ball::Ball()
 {
-	if(!compiled) {
-        Ball::compile();
+	if(!Ball::compiled) {
+        Ball::compileDL();
     }
-    active = false;
+    pos.set(0.0,0.0,0.0);
+    dir.set(0.0,0.0,-1.0);
+    vel = 0;
+    unhit();
 }
 
-void Ball::setPos(const Vector2 & newPos)
+Ball::~Ball()
 {
-	pos[0] = newPos[0];
-	pos[1] = newPos[1];
+    
 }
 
-Vector2 Ball::getPos()
+void Ball::compileDL()
 {
-	return pos;
+    if(Ball::compiled) return;
+    Ball::displayList = glGenLists(1);
+    glNewList(Ball::displayList, GL_COMPILE);
+    gluSphere(gluNewQuadric(),BALL_RADIUS,10,10);
+    glEndList();
+    Ball::compiled = true;
 }
 
-void Ball::setColor(const Vector3 & newColor)
+void Ball::draw()
 {
-	//Sets specular, ambient, and diffuse
-	color[0] = newColor[0];
-	color[1] = newColor[1];
-	color[2] = newColor[2];
-    specular[0] = 0.6f;
-    specular[1] = 0.6f;
-    specular[2] = 0.6f;
-    specular[3] = 1.0f;
-    ambient[0] = (float)color[0];
-    ambient[1] = (float)color[1];
-    ambient[2] = (float)color[2];
-    ambient[3] = 1.0f;
-    diffuse[0] = (float)color[0];
-    diffuse[1] = (float)color[1];
-    diffuse[2] = (float)color[2];
-    diffuse[3] = 1.0f;
+    if(!Ball::compiled) return;
+    glCallList(Ball::displayList);
 }
+
+void Ball::drawAtPosition()
+{
+    if(active) 
+    {
+        displayTimer();
+    }    
+    setGLColor();
+    
+    glPushMatrix();
+    glTranslated(pos[0], pos[1], pos[2]);
+    draw();
+    glPopMatrix();
+}
+
 
 bool Ball::checkCollisionWithPlayer(Player * p)
 {
-    if(p->getPos()[0] > this->pos[0]-(BALL_RADIUS*2) && p->getPos()[0] < this->pos[0]+(BALL_RADIUS*2) &&
-       p->getPos()[1] > this->pos[1]-(BALL_RADIUS*2) && p->getPos()[1] < this->pos[1]+(BALL_RADIUS*2))
+    if(p->pos[0] > this->pos[0]-(BALL_RADIUS*2) && p->pos[0] < this->pos[0]+(BALL_RADIUS*2) &&
+       p->pos[1] > this->pos[1]-(BALL_RADIUS*2) && p->pos[1] < this->pos[1]+(BALL_RADIUS*2))
     {
-        p->setDir(p->getDir().reflectOverVector((this->pos-p->getPos())).rotate(2/3.1415));
+        p->dir = p->dir.bounceOffNormal(this->pos-p->pos);
         this->hit();
         return true;
     }
     return false;
-}
-
-void Ball::compile()
-{
-    if(compiled) return;
-    ballList = glGenLists(1);
-    glNewList(ballList, GL_COMPILE);
-    gluSphere(gluNewQuadric(),BALL_RADIUS,10,10);
-    glEndList();
-    compiled = true;
 }
 
 void Ball::hit()
@@ -69,6 +67,7 @@ void Ball::hit()
     this->active = true;
     this->timeHit = Model::currTime; //now
     this->timeLeft = FULL_TIME;
+    setColor(9.0, 0.0, 0.0, 1.0, 0.5, 1.0, 1.0);
 }
 
 void Ball::unhit()
@@ -76,6 +75,7 @@ void Ball::unhit()
     this->active = false;
     this->timeHit = NULL;
     this->timeLeft = 0;
+    setColor(0.0, 1.0, 0.0, 1.0, 0.5, 1.0, 1.0);
 }
 
 void Ball::updateTime()
@@ -92,28 +92,3 @@ void Ball::displayTimer()
 {
     
 }
-
-void Ball::draw()
-{
-    if(!compiled) return;
-    Vector3 newCol;
-    if(active) 
-    {
-        newCol.set((GLfloat)1.0, (GLfloat)0.0, (GLfloat)0.0);
-        displayTimer();
-    }    
-    else
-    {
-       newCol.set((GLfloat)0.5, (GLfloat)1.0, (GLfloat)0.0); 
-    }
-    setColor(newCol);
-    glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
-    glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);  
-    glColor3d(color[0], color[1], color[2]);
-    glPushMatrix();
-    glTranslated((GLdouble)this->pos[0], (GLdouble)0.0, (GLdouble)this->pos[1]);
-    glCallList(ballList);
-    glPopMatrix();
-}
-

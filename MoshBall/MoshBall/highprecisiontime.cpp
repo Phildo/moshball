@@ -16,7 +16,7 @@ double HighPrecisionTime::TimeSinceLastCall()
 #ifdef	WIN32
 	LARGE_INTEGER now;
 	LARGE_INTEGER t;
-
+    
 	QueryPerformanceCounter(&now);
 	t.QuadPart = now.QuadPart - previousTicks.QuadPart;
 	result = ((double) t.QuadPart) / ((double) ticksPerSecond.QuadPart);
@@ -31,7 +31,7 @@ double HighPrecisionTime::TotalTime()
 #ifdef	WIN32
 	LARGE_INTEGER now;
 	LARGE_INTEGER t;
-
+    
 	QueryPerformanceCounter(&now);
 	t.QuadPart = now.QuadPart - initializationTicks.QuadPart;
 	result = ((double) t.QuadPart) / ((double) ticksPerSecond.QuadPart);
