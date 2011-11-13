@@ -1016,10 +1016,10 @@
 		<string>PrimaryDocumentVisibleCharacterRange</string>
 		<string>HideAllIssues</string>
 		<string>PrimaryDocumentSelectedCharacterRange</string>
-		<real>342910224.618074</real>
-		<string>{1504, 868}</string>
-		<string>{1743, 0}</string>
-		<string>drawHud()</string>
+		<real>342910814.94662797</real>
+		<string>{3910, 1204}</string>
+		<string>{4341, 0}</string>
+		<string>checkBallCollisions(Movable * m, const Vector3 &amp; newPos, int ignoreBall)</string>
 		<string>Xcode.IDEKit.EditorDocument.SourceCode</string>
 		<dict>
 			<key>$class</key>
@@ -8938,9 +8938,9 @@
 				</dict>
 			</array>
 		</dict>
-		<real>342909123.09189701</real>
-		<string>{0, 848}</string>
-		<string>{264, 0}</string>
+		<real>342910661.72159302</real>
+		<string>{162, 914}</string>
+		<string>{593, 0}</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -9370,9 +9370,9 @@
 				</dict>
 			</array>
 		</dict>
-		<real>342910224.61697</real>
-		<string>{1504, 868}</string>
-		<string>{1743, 0}</string>
+		<real>342910814.94562602</real>
+		<string>{3910, 1204}</string>
+		<string>{4341, 0}</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -10172,7 +10172,7 @@
 				</dict>
 			</array>
 		</dict>
-		<real>342909084.813954</real>
+		<real>342910612.07551903</real>
 		<string>{0, 793}</string>
 		<string>{561, 0}</string>
 		<dict>
@@ -11093,7 +11093,7 @@
 				<integer>897</integer>
 			</dict>
 			<key>NS.time</key>
-			<real>342910179.82127303</real>
+			<real>342910704.89144099</real>
 		</dict>
 		<dict>
 			<key>$classes</key>
@@ -11104,7 +11104,7 @@
 			<key>$classname</key>
 			<string>NSDate</string>
 		</dict>
-		<string>Today at 2:49 PM</string>
+		<string>Today at 2:58 PM</string>
 		<integer>106</integer>
 		<dict>
 			<key>$class</key>
@@ -11205,7 +11205,7 @@
 				<integer>905</integer>
 			</dict>
 		</dict>
-		<string>file://localhost/Users/Phil/Documents/Dev/moshball/MoshBall/MoshBall/Arrow.cpp</string>
+		<string>file://localhost/Users/Phil/Documents/Dev/moshball/MoshBall/MoshBall/Model.h</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -11223,7 +11223,7 @@
 				<integer>907</integer>
 			</dict>
 		</dict>
-		<string>file://localhost/Users/Phil/Documents/Dev/moshball/MoshBall/MoshBall/Arrow.h</string>
+		<string>file://localhost/Users/Phil/Documents/Dev/moshball/MoshBall/MoshBall/Model.cpp</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -11241,7 +11241,7 @@
 				<integer>909</integer>
 			</dict>
 		</dict>
-		<string>file://localhost/Users/Phil/Documents/Dev/moshball/MoshBall/MoshBall/Arena.cpp</string>
+		<string>file://localhost/Users/Phil/Documents/Dev/moshball/MoshBall/MoshBall/Arrow.cpp</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -11259,7 +11259,7 @@
 				<integer>911</integer>
 			</dict>
 		</dict>
-		<string>file://localhost/Users/Phil/Documents/Dev/moshball/MoshBall/MoshBall/Model.h</string>
+		<string>file://localhost/Users/Phil/Documents/Dev/moshball/MoshBall/MoshBall/Arrow.h</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -11277,7 +11277,7 @@
 				<integer>913</integer>
 			</dict>
 		</dict>
-		<string>file://localhost/Users/Phil/Documents/Dev/moshball/MoshBall/MoshBall/Model.cpp</string>
+		<string>file://localhost/Users/Phil/Documents/Dev/moshball/MoshBall/MoshBall/Arena.cpp</string>
 		<dict>
 			<key>$class</key>
 			<dict>

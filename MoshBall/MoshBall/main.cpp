@@ -188,12 +188,15 @@ void checkWallCollisions(Movable * m, const Vector3 & newPos)
     }
 }
 
-void checkBallCollisions(const Vector3 & newPos)
+void checkBallCollisions(Movable * m, const Vector3 & newPos, int ignoreBall)
 {
     for(int i = 0; i < NUM_BALLS; i++)
     {
-        if(balls[i]->checkCollisionWithMovable(player))
-            collide(player, balls[i], .5);
+        if(i != ignoreBall)
+        {
+            if(balls[i]->checkCollisionWithMovable(m))
+                collide(m, balls[i], .5);
+        }
     }
 }
 
@@ -205,7 +208,7 @@ void updateBalls(double timePassed)
         Vector3 newPos  = balls[i]->pos+(balls[i]->dir*(balls[i]->vel*timePassed));
         
         checkWallCollisions(balls[i], newPos);
-        //checkBallCollisions(newPos);
+        checkBallCollisions(balls[i], newPos, i);
         balls[i]->updatePos(timePassed);
     }
 }
@@ -217,7 +220,7 @@ void updatePlayer(double timePassed)
     Vector3 newPos  = player->pos+(player->dir*(player->vel*timePassed));
     
     checkWallCollisions(player, newPos);
-    checkBallCollisions(newPos);
+    checkBallCollisions(player, newPos, -1);
     player->updatePos(timePassed);
 }
 
