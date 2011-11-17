@@ -177,6 +177,12 @@ void Vector3::normalize(void)
     }
 }
 
+Vector3 Vector3::getNormal(void) const
+{
+    float len = length();
+    if(len > 0) return Vector3(vec[0]/len, vec[1]/len, vec[2]/len);
+    else return Vector3();
+}
 
 GLfloat Vector3::dot(const Vector3& v) const
 {
@@ -223,9 +229,14 @@ Vector3 Vector3::rotateAroundVect3(const Vector3& rav, double deg) const
                    (w * dp) + (((z*((u*u)+(v*v)))-(w*((u*x)+(v*y))))*(cos(rad))) + (((-1*v*x)+(u*y))*(sin(rad))));
 }
 
+Vector3 Vector3::projectOnto(const Vector3& pv) const
+{
+    return pv.getNormal()*(this->length()*(this->getNormal().dot(pv.getNormal())));
+}
+
 Vector3 Vector3::bounceOffNormal(const Vector3& nv) const
 {
-    return this->rotateAroundVect3(nv, 180.0)*-1;
+    return this->operator+(this->projectOnto(nv)*-2);
 }
 
 Vector3 Vector3::interpolateVect3(const Vector3 & iv, double t) const

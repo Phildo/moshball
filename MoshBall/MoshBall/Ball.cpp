@@ -10,7 +10,7 @@ Ball::Ball()
     }
     pos.set(0.0,0.0,0.0);
     dir.set(0.0,0.0,-1.0);
-    vel = 100;
+    vel = 0;
     unhit();
 }
 

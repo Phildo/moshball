@@ -195,7 +195,7 @@ void checkBallCollisions(Movable * m, const Vector3 & newPos, int ignoreBall)
         if(i != ignoreBall)
         {
             if(balls[i]->checkCollisionWithMovable(m))
-                collide(m, balls[i], .5);
+                collide(m, balls[i], 0);
         }
     }
 }

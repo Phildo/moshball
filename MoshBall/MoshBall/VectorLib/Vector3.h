@@ -38,12 +38,14 @@ public:
     GLfloat length(void) const;
     GLfloat lengthSquared(void) const;
     void normalize(void);
+    Vector3 getNormal(void) const;
     GLfloat dot(const Vector3& v) const;
     Vector3 cross(const Vector3& v) const;
     GLfloat distance(const Vector3& v) const;
     GLfloat distanceSquared(const Vector3& v) const;
     
     Vector3 rotateAroundVect3(const Vector3& rav, double deg) const;
+    Vector3 projectOnto(const Vector3& pv) const;
     Vector3 bounceOffNormal(const Vector3& nv) const;
     Vector3 interpolateVect3(const Vector3 & iv, double t) const;
     
