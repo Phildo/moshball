@@ -37,25 +37,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "MoshBall/main.cpp"
-         timestampString = "343002433.106294"
+         timestampString = "343451623.676071"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "136"
-         endingLineNumber = "136"
-         landmarkName = "collide(Movable *a, Movable *b, double ir)"
-         landmarkType = "7">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "MoshBall/main.cpp"
-         timestampString = "343002433.106294"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "159"
-         endingLineNumber = "159"
+         startingLineNumber = "164"
+         endingLineNumber = "164"
          landmarkName = "checkWallCollisions(const Vector3 &amp; newPos)"
          landmarkType = "7">
       </FileBreakpoint>
@@ -65,11 +51,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "MoshBall/main.cpp"
-         timestampString = "343002433.106294"
+         timestampString = "343451623.676071"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "160"
-         endingLineNumber = "160"
+         startingLineNumber = "165"
+         endingLineNumber = "165"
          landmarkName = "checkWallCollisions(const Vector3 &amp; newPos)"
          landmarkType = "7">
       </FileBreakpoint>
@@ -79,11 +65,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "MoshBall/main.cpp"
-         timestampString = "343002433.106294"
+         timestampString = "343451623.676071"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "168"
-         endingLineNumber = "168"
+         startingLineNumber = "173"
+         endingLineNumber = "173"
          landmarkName = "checkWallCollisions(const Vector3 &amp; newPos)"
          landmarkType = "7">
       </FileBreakpoint>
@@ -93,11 +79,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "MoshBall/main.cpp"
-         timestampString = "343002433.106294"
+         timestampString = "343451623.676071"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "176"
-         endingLineNumber = "176"
+         startingLineNumber = "181"
+         endingLineNumber = "181"
          landmarkName = "checkWallCollisions(const Vector3 &amp; newPos)"
          landmarkType = "7">
       </FileBreakpoint>
@@ -107,11 +93,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "MoshBall/main.cpp"
-         timestampString = "343002433.106294"
+         timestampString = "343451623.676071"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "184"
-         endingLineNumber = "184"
+         startingLineNumber = "189"
+         endingLineNumber = "189"
          landmarkName = "checkWallCollisions(const Vector3 &amp; newPos)"
          landmarkType = "7">
       </FileBreakpoint>
@@ -135,11 +121,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "MoshBall/main.cpp"
-         timestampString = "343002433.106294"
+         timestampString = "343456543.008897"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "365"
-         endingLineNumber = "365"
+         startingLineNumber = "376"
+         endingLineNumber = "376"
          landmarkName = "initGame()"
          landmarkType = "7">
       </FileBreakpoint>

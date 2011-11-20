@@ -131,25 +131,30 @@ void drawHud()
  * GAME LOGIC
  */
 
-void collide(Movable *a, Movable *b, double ir)
+void collide(Movable *a, Movable *b)
 {
-    if(ir > 1) ir = 1;
-    if(ir < 0) ir = 0;
+    //Sets forces as directly opposing vectors
+    Vector3 aForceOnb = (b->pos - a->pos);
+    Vector3 bForceOna = (a->pos - b->pos);
     
-    double effectOnA = 1-ir;
-    double effectOnB = ir;
-    Vector3 perfectReflectionOffB = a->dir.bounceOffNormal(b->pos-a->pos);
-    Vector3 perfectReflectionOffA = b->dir.bounceOffNormal(a->pos-b->pos);
-    perfectReflectionOffB.normalize();
-    perfectReflectionOffA.normalize();
-    a->dir = a->dir.interpolateVect3(perfectReflectionOffB, effectOnA);
-    b->dir = b->dir.interpolateVect3(perfectReflectionOffA, effectOnB);
-    a->dir.normalize();
-    b->dir.normalize();
+    //Projects velocity vector onto the direct opposition vectors
+    aForceOnb = (a->dir*a->vel).projectOnto(aForceOnb);
+    bForceOna = (b->dir*b->vel).projectOnto(bForceOna);
     
-    //NON-ROBUST FIX FOR THIS GAME ONLY
-    a->dir[1] = 0;
-    b->dir[1] = 0;
+    //Equal and opposite force applied
+    aForceOnb-=bForceOna;
+    bForceOna-=(aForceOnb+bForceOna);
+
+    //Adds force to initial velocity to get 
+    //resulting velocity vector
+    aForceOnb+=(b->dir*b->vel);
+    bForceOna+=(a->dir*a->vel);
+    
+    //splits velocity vector into scalar vel and normalized vector dir
+    a->vel = bForceOna.length();
+    b->vel = aForceOnb.length();
+    a->dir = bForceOna.getNormal();
+    b->dir = aForceOnb.getNormal();
 }
 
 void checkWallCollisions(Movable * m, const Vector3 & newPos)
@@ -158,33 +163,33 @@ void checkWallCollisions(Movable * m, const Vector3 & newPos)
     if(newPos[2] < ARENA_LENGTH*-.5+BALL_RADIUS)
     {
         arena->pos.set(m->pos[0], 0.0, -ARENA_LENGTH);
-        arena->dir = Model::SouthVect;
-        arena->vel = 0;
-        collide(m, arena, 0);
+        arena->dir.set(m->dir[0], m->dir[1], -m->dir[2]);// = Model::SouthVect;
+        arena->vel = m->vel;
+        collide(m, arena);
     }
     //South Wall
     else if(newPos[2] > ARENA_LENGTH*.5-BALL_RADIUS)
     {
         arena->pos.set(m->pos[0], 0.0, ARENA_LENGTH);
-        arena->dir = Model::NorthVect;
-        arena->vel = 0;
-        collide(m, arena, 0);
+        arena->dir.set(m->dir[0], m->dir[1], -m->dir[2]);// = Model::NorthVect;
+        arena->vel = m->vel;
+        collide(m, arena);
     }
     //West Wall
     else if(newPos[0] < ARENA_WIDTH*-.5+BALL_RADIUS)
     {
         arena->pos.set(-ARENA_WIDTH, 0.0, m->pos[2]);
-        arena->dir = Model::EastVect;
-        arena->vel = 0;
-        collide(m, arena, 0);
+        arena->dir.set(-m->dir[0], m->dir[1], m->dir[2]);// = Model::EastVect;
+        arena->vel = m->vel;
+        collide(m, arena);
     }
     //East Wall
     else if(newPos[0] > ARENA_WIDTH*.5-BALL_RADIUS)
     {
         arena->pos.set(ARENA_WIDTH, 0.0, m->pos[2]);
-        arena->dir = Model::WestVect;
-        arena->vel = 0;
-        collide(m, arena, 0);
+        arena->dir.set(-m->dir[0], m->dir[1], m->dir[2]);// = Model::WestVect;
+        arena->vel = m->vel;
+        collide(m, arena);
     }
 }
 
@@ -195,27 +200,33 @@ void checkBallCollisions(Movable * m, const Vector3 & newPos, int ignoreBall)
         if(i != ignoreBall)
         {
             if(balls[i]->checkCollisionWithMovable(m))
-                collide(m, balls[i], 0);
+                collide(m, balls[i]);
         }
     }
+}
+
+void updatePositionAndDetectCollisions(Movable *m, int i)
+{
+    
 }
 
 void updateBalls(double timePassed)
 {
     for(int i = 0; i < NUM_BALLS; i++)
     {
-        //player->vel = mouseY*-SPEED;
         Vector3 newPos  = balls[i]->pos+(balls[i]->dir*(balls[i]->vel*timePassed));
         
         checkWallCollisions(balls[i], newPos);
         checkBallCollisions(balls[i], newPos, i);
         balls[i]->updatePos(timePassed);
+        balls[i]->vel *= 0.9999;
     }
 }
 
 void updatePlayer(double timePassed)
 {
     player->dir = player->dir.rotateAroundVect3(Model::UpVect, mouseX*ROT_SPEED*timePassed);
+    
     player->vel = mouseY*-SPEED;
     Vector3 newPos  = player->pos+(player->dir*(player->vel*timePassed));
     
