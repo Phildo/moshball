@@ -196,7 +196,6 @@ double findTofIntersection(Movable * aM, Movable * bM, double timePassed)
 
 void checkWallCollisions(Movable * m, double timePassed, Collision & c)
 {
-    double returnedColTime;
     Vector3 newPos = m->pos+(m->dir*m->vel*timePassed);
     
     //North Wall
