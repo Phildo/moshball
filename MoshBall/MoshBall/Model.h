@@ -17,15 +17,18 @@
 #define HUD_HEIGHT COMPASS_DISTANCE*2+100
 
 #define NUM_MODES 2
-#define NUM_BALLS 20
+#define NUM_BALLS 0
 #define SEED 0
 
-#define MOVEMENT_TOLERANCE .025
+#define MOVEMENT_TOLERANCE 0.025
 #define SPEED 100
 #define ROT_SPEED 10
 
 #define BALL_RADIUS 50
 #define FULL_TIME (30+(NUM_BALLS*2))
+
+#define NO_COLLISION 999999999.0
+
 #include <time.h>
 #include "VectorLib/Vectors.h"
 #include "Player.h"

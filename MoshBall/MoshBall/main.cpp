@@ -8,6 +8,7 @@
 #include <iostream>
 
 #include "Model.h"
+#include "Collision.h"
 #include "VectorLib/Vectors.h"
 
 static double mouseX, mouseY;
@@ -157,81 +158,166 @@ void collide(Movable *a, Movable *b)
     b->dir = aForceOnb.getNormal();
 }
 
-void checkWallCollisions(Movable * m, const Vector3 & newPos)
+double findTofIntersection(Movable * aM, Movable * bM, double timePassed)
 {
-    //North Wall
-    if(newPos[2] < ARENA_LENGTH*-.5+BALL_RADIUS)
+    //MATH FROM http://stackoverflow.com/questions/1073336/circle-line-collision-detection
+    //USER 'bobobobo'
+    
+    Vector2 d;
+    Vector2 f;
+    d.set((aM->dir*aM->vel*timePassed)[0], (aM->dir*aM->vel*timePassed)[2]);
+    f.set((bM->pos-aM->pos)[0], (bM->pos-aM->pos)[2]);
+    float a = d.dot(d);
+    float b = 2*f.dot(d);
+    float c = f.dot(f) - (2*BALL_RADIUS*2*BALL_RADIUS);
+    
+    float discriminant = b*b-4*a*c;
+    if(discriminant < 0)
     {
-        arena->pos.set(m->pos[0], 0.0, -ARENA_LENGTH);
-        arena->dir.set(m->dir[0], m->dir[1], -m->dir[2]);// = Model::SouthVect;
-        arena->vel = m->vel;
-        collide(m, arena);
+        return NO_COLLISION;
+    }
+    else
+    {
+        discriminant = sqrtf(discriminant);
+        float t1 = (-b + discriminant)/(2*a);
+        //float t2 = (-b - discriminant)/(2*a);
+        
+        if(t1 >= 0 && t1 <= 1)
+        {
+            return t1 * timePassed;
+        }
+        else
+        {
+            return NO_COLLISION;
+        }
+    }
+    return NO_COLLISION; //Really shouldn't get here... just makes compiler happy
+}
+
+void checkWallCollisions(Movable * m, double timePassed, Collision & c)
+{
+    double returnedColTime;
+    Vector3 newPos = m->pos+(m->dir*m->vel*timePassed);
+    
+    //North Wall
+    if(newPos[2] < (ARENA_LENGTH*-.5+BALL_RADIUS))
+    {
+        double t = ((ARENA_LENGTH*-.5+BALL_RADIUS)-m->pos[2])/(newPos[2]-m->pos[2]);
+        if(t*timePassed < c.timePassed)
+        {
+            arena->pos.set((m->pos+(t*m->dir*m->vel*timePassed))[0], 0.0, (ARENA_LENGTH*-.5-BALL_RADIUS));
+            arena->dir = Model::SouthVect;
+            arena->vel = m->vel;
+            c.timePassed = t*timePassed;
+            c.b = arena;
+        }
     }
     //South Wall
     else if(newPos[2] > ARENA_LENGTH*.5-BALL_RADIUS)
     {
-        arena->pos.set(m->pos[0], 0.0, ARENA_LENGTH);
-        arena->dir.set(m->dir[0], m->dir[1], -m->dir[2]);// = Model::NorthVect;
-        arena->vel = m->vel;
-        collide(m, arena);
+        double t = ((ARENA_LENGTH*.5-BALL_RADIUS)-m->pos[2])/(newPos[2]-m->pos[2]);
+        if(t*timePassed < c.timePassed)
+        {
+            arena->pos.set((m->pos+(t*m->dir*m->vel*timePassed))[0], 0.0, (ARENA_LENGTH*.5+BALL_RADIUS));
+            arena->dir = Model::NorthVect;
+            arena->vel = m->vel;
+            c.timePassed = t*timePassed;
+            c.b = arena;
+        }
     }
     //West Wall
     else if(newPos[0] < ARENA_WIDTH*-.5+BALL_RADIUS)
     {
-        arena->pos.set(-ARENA_WIDTH, 0.0, m->pos[2]);
-        arena->dir.set(-m->dir[0], m->dir[1], m->dir[2]);// = Model::EastVect;
-        arena->vel = m->vel;
-        collide(m, arena);
+        double t = ((ARENA_WIDTH*-.5+BALL_RADIUS)-m->pos[0])/(newPos[2]-m->pos[2]);
+        if(t*timePassed < c.timePassed)
+        {
+            arena->pos.set((ARENA_WIDTH*-.5-BALL_RADIUS), 0.0, (m->pos+(t*m->dir*m->vel*timePassed))[2]);
+            arena->dir = Model::EastVect;
+            arena->vel = m->vel;
+            c.timePassed = t*timePassed;
+            c.b = arena;
+        }
     }
     //East Wall
     else if(newPos[0] > ARENA_WIDTH*.5-BALL_RADIUS)
     {
-        arena->pos.set(ARENA_WIDTH, 0.0, m->pos[2]);
-        arena->dir.set(-m->dir[0], m->dir[1], m->dir[2]);// = Model::WestVect;
-        arena->vel = m->vel;
-        collide(m, arena);
+        double t = ((ARENA_WIDTH*.5-BALL_RADIUS)-m->pos[0])/(newPos[2]-m->pos[2]);
+        if(t*timePassed < c.timePassed)
+        {
+            arena->pos.set((ARENA_WIDTH*.5-BALL_RADIUS), 0.0, (m->pos+(t*m->dir*m->vel*timePassed))[2]);
+            arena->dir = Model::WestVect;
+            arena->vel = m->vel;
+            c.timePassed = t*timePassed;
+            c.b = arena;
+        }        
     }
 }
 
-void checkBallCollisions(Movable * m, const Vector3 & newPos, int ignoreBall)
+void checkBallCollisions(Movable * m, int ignoreBall, double timePassed, Collision & c)
 {
+    double returnedColTime;
     for(int i = 0; i < NUM_BALLS; i++)
     {
         if(i != ignoreBall)
         {
-            if(balls[i]->checkCollisionWithMovable(m))
-                collide(m, balls[i]);
+            returnedColTime = findTofIntersection(m, balls[i], timePassed);
+            if(returnedColTime < c.timePassed)
+            {
+                c.timePassed = returnedColTime;
+                c.b = balls[i];
+            }
+        }
+    }
+    if(ignoreBall != -1)
+    {
+        returnedColTime = findTofIntersection(m, player, timePassed);
+        if(returnedColTime < c.timePassed)
+        {
+            c.timePassed = returnedColTime;
+            c.b = player;
         }
     }
 }
 
-void updatePositionAndDetectCollisions(Movable *m, int i)
+void updatePathWithCollisions(Movable * me, int ignoreBall, double timePassed)
 {
+    Collision c;
+    c.timePassed = NO_COLLISION;
+    c.a = me;
     
+    checkWallCollisions(me, timePassed, c);
+    checkBallCollisions(me, ignoreBall, timePassed, c);
+    
+    if(c.timePassed != NO_COLLISION)
+    {
+        me->pos = me->pos+(me->dir*me->vel*c.timePassed);
+        timePassed-=c.timePassed;
+        collide(me, c.b);
+        updatePathWithCollisions(me, ignoreBall, timePassed);
+    }
+    else
+    {
+        me->pos = me->pos+(me->dir*me->vel*timePassed);
+    }
 }
 
 void updateBalls(double timePassed)
 {
     for(int i = 0; i < NUM_BALLS; i++)
-    {
-        Vector3 newPos  = balls[i]->pos+(balls[i]->dir*(balls[i]->vel*timePassed));
-        
-        checkWallCollisions(balls[i], newPos);
-        checkBallCollisions(balls[i], newPos, i);
-        balls[i]->updatePos(timePassed);
-        balls[i]->vel *= 0.9999;
+    {        
+        updatePathWithCollisions(balls[i], i, timePassed);
+        //balls[i]->updatePos(timePassed);
+        //balls[i]->vel *= 0.999;
     }
 }
 
 void updatePlayer(double timePassed)
 {
+    
     player->dir = player->dir.rotateAroundVect3(Model::UpVect, mouseX*ROT_SPEED*timePassed);
-    
     player->vel = mouseY*-SPEED;
-    Vector3 newPos  = player->pos+(player->dir*(player->vel*timePassed));
     
-    checkWallCollisions(player, newPos);
-    checkBallCollisions(player, newPos, -1);
+    updatePathWithCollisions(player, -1, timePassed);
     player->updatePos(timePassed);
 }
 
