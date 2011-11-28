@@ -14,7 +14,7 @@ GLuint Jumbotron::displayList;
 Jumbotron::Jumbotron()
 {
 	if(!Jumbotron::compiled) {
-        setColor(0.0, 0.0, 1.0, 1.0, 0.5, 1.0, 1.0);
+        setColor(1.0, 0.0, 1.0, 1.0, 0.5, 1.0, 1.0);
         Jumbotron::compileDL();
     }
 }
@@ -36,8 +36,6 @@ void Jumbotron::compileDL()
     glPopMatrix();
     glRotated(90.0, 0.0, 0.0, 1.0);
     gluCylinder(gluNewQuadric(), 20, 20, 300, 4, 1);
-    glPushMatrix();
-    glPopMatrix(); 
     glPopMatrix();
     glEndList();
     Jumbotron::compiled = true;

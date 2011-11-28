@@ -36,8 +36,6 @@ void Arrow::compileDL()
         glPopMatrix();
         glRotated(90.0, 0.0, 0.0, 1.0);
         gluCylinder(gluNewQuadric(), 20, 20, 300, 4, 1);
-            glPushMatrix();
-            glPopMatrix(); 
     glPopMatrix();
     glEndList();
     Arrow::compiled = true;
