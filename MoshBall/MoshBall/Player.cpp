@@ -6,7 +6,7 @@ GLuint Player::displayList;
 Player::Player()
 {
 	if(!Player::compiled) {
-        setColor(0.0, 0.0, 1.0, 1.0, 0.5, 1.0, 1.0);
+        setColor(0.0, 0.0, 1.0, 1.0, 0.25, 0.25, 0.5);
         Player::compileDL();
     }
     pos.set(0.0,0.0,0.0);

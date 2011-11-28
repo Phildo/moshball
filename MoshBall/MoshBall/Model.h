@@ -23,6 +23,7 @@
 #define MOVEMENT_TOLERANCE 0.025
 #define SPEED 100
 #define ROT_SPEED 10
+#define FRICTION 0.9999
 
 #define BALL_RADIUS 50
 #define FULL_TIME (30+(NUM_BALLS*2))
@@ -35,12 +36,14 @@
 #include "Ball.h"
 #include "Arena.h"
 #include "Arrow.h"
+#include "Jumbotron.h"
 #include "highprecisiontime.h"
 
 class Player;
 class Ball;
 class Arena;
 class Arrow;
+class Jumbotron;
 
 class Model{
 public:
@@ -51,6 +54,8 @@ public:
     static Ball **balls;
     static Arena *arena;
     static Arrow *compass;
+    static Jumbotron *jOne;
+    static Jumbotron *jTwo;
     
     static time_t currTime;
     static Vector3 UpVect;

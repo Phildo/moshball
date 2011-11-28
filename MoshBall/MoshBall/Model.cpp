@@ -12,6 +12,8 @@ Player * Model::player;
 Arena * Model::arena;
 Ball ** Model::balls;
 Arrow * Model::compass;
+Jumbotron * Model::jOne;
+Jumbotron * Model::jTwo;
 
 time_t Model::currTime;
 Vector3 Model::UpVect;
@@ -27,6 +29,8 @@ void Model::setUpModel()
     player = new Player();
     balls = new Ball*[NUM_BALLS];
     compass = new Arrow();
+    jOne = new Jumbotron();
+    jTwo = new Jumbotron();
     
     UpVect.set   ( 0, 1, 0);
     DownVect.set ( 0,-1, 0);

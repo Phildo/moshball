@@ -67,7 +67,7 @@ void Ball::hit()
     this->active = true;
     this->timeHit = Model::currTime; //now
     this->timeLeft = FULL_TIME;
-    setColor(1.0, 0.0, 0.0, 1.0, 0.5, 1.0, 1.0);
+    setColor(1.0, 0.0, 0.0, 1.0, 0.25, 0.25, 0.5);
 }
 
 void Ball::unhit()
@@ -75,7 +75,7 @@ void Ball::unhit()
     this->active = false;
     this->timeHit = NULL;
     this->timeLeft = 0;
-    setColor(0.0, 1.0, 0.0, 1.0, 0.5, 1.0, 1.0);
+    setColor(0.0, 1.0, 0.0, 1.0, 0.25, 0.25, 0.5);
 }
 
 void Ball::updateTime()

@@ -18,6 +18,26 @@ Player * player;
 Arena * arena;
 Ball ** balls;
 Arrow * compass;
+Jumbotron * jOne;
+Jumbotron * jTwo;
+
+
+/*
+ *
+ *
+ *
+ */
+int debug = 0;
+/*
+ *
+ *
+ *
+ */
+
+
+
+
+
 
 /*
  * HELPER FUNCTIONS
@@ -47,6 +67,14 @@ void drawBalls()
     }
 }
 
+void drawJumbos()
+{
+    glPushMatrix();
+    //glTranslated(ARENA_LENGTH*.5, 0, ARENA_WIDTH);
+    jOne->draw();
+    glPopMatrix();
+}
+
 void drawCrosshair()
 {
     glPushMatrix();
@@ -56,13 +84,20 @@ void drawCrosshair()
     glPopMatrix();
 }
 
-void renderSelf(bool withSelf)
+void renderSelf(bool forMap)
 {
     arena->draw();
-    if(withSelf) player->drawAtPosition();
-    else drawCrosshair();
     drawBalls();
-    compass->draw();
+    if(forMap)
+    {
+        player->drawAtPosition();
+        compass->draw();
+    }
+    else 
+    {
+        drawCrosshair();
+        drawJumbos();
+    }
 }
 
 void drawMain()
@@ -134,6 +169,11 @@ void drawHud()
 
 void collide(Movable *a, Movable *b)
 {
+    bool negA = false;
+    bool negB = false;
+    if(a->vel < 0) negA = true;
+    if(b->vel < 0) negB = true;
+    
     //Sets forces as directly opposing vectors
     Vector3 aForceOnb = (b->pos - a->pos);
     Vector3 bForceOna = (a->pos - b->pos);
@@ -154,6 +194,16 @@ void collide(Movable *a, Movable *b)
     //splits velocity vector into scalar vel and normalized vector dir
     a->vel = bForceOna.length();
     b->vel = aForceOnb.length();
+    if(negA) 
+    {
+        bForceOna = bForceOna*-1; 
+        a->vel *= -1;
+    }
+    if(negA)
+    {
+        aForceOnb = aForceOnb*-1;
+        b->vel *= -1;
+    }
     a->dir = bForceOna.getNormal();
     b->dir = aForceOnb.getNormal();
 }
@@ -206,7 +256,7 @@ void checkWallCollisions(Movable * m, double timePassed, Collision & c)
         {
             arena->pos.set((m->pos+(t*m->dir*m->vel*timePassed))[0], 0.0, (ARENA_LENGTH*-.5-BALL_RADIUS));
             arena->dir = Model::SouthVect;
-            arena->vel = m->vel;
+            arena->vel = (m->vel*m->dir).projectOnto(Model::SouthVect).length();
             c.timePassed = t*timePassed;
             c.b = arena;
         }
@@ -219,20 +269,21 @@ void checkWallCollisions(Movable * m, double timePassed, Collision & c)
         {
             arena->pos.set((m->pos+(t*m->dir*m->vel*timePassed))[0], 0.0, (ARENA_LENGTH*.5+BALL_RADIUS));
             arena->dir = Model::NorthVect;
-            arena->vel = m->vel;
+            arena->vel = (m->vel*m->dir).projectOnto(Model::NorthVect).length();
             c.timePassed = t*timePassed;
             c.b = arena;
         }
     }
+    
     //West Wall
-    else if(newPos[0] < ARENA_WIDTH*-.5+BALL_RADIUS)
+    if(newPos[0] < ARENA_WIDTH*-.5+BALL_RADIUS)
     {
-        double t = ((ARENA_WIDTH*-.5+BALL_RADIUS)-m->pos[0])/(newPos[2]-m->pos[2]);
+        double t = ((ARENA_WIDTH*-.5+BALL_RADIUS)-m->pos[0])/(newPos[0]-m->pos[0]);
         if(t*timePassed < c.timePassed)
         {
             arena->pos.set((ARENA_WIDTH*-.5-BALL_RADIUS), 0.0, (m->pos+(t*m->dir*m->vel*timePassed))[2]);
             arena->dir = Model::EastVect;
-            arena->vel = m->vel;
+            arena->vel = (m->vel*m->dir).projectOnto(Model::EastVect).length();
             c.timePassed = t*timePassed;
             c.b = arena;
         }
@@ -240,12 +291,12 @@ void checkWallCollisions(Movable * m, double timePassed, Collision & c)
     //East Wall
     else if(newPos[0] > ARENA_WIDTH*.5-BALL_RADIUS)
     {
-        double t = ((ARENA_WIDTH*.5-BALL_RADIUS)-m->pos[0])/(newPos[2]-m->pos[2]);
+        double t = ((ARENA_WIDTH*.5-BALL_RADIUS)-m->pos[0])/(newPos[0]-m->pos[0]);
         if(t*timePassed < c.timePassed)
         {
-            arena->pos.set((ARENA_WIDTH*.5-BALL_RADIUS), 0.0, (m->pos+(t*m->dir*m->vel*timePassed))[2]);
+            arena->pos.set((ARENA_WIDTH*.5+BALL_RADIUS), 0.0, (m->pos+(t*m->dir*m->vel*timePassed))[2]);
             arena->dir = Model::WestVect;
-            arena->vel = m->vel;
+            arena->vel = (m->vel*m->dir).projectOnto(Model::WestVect).length();
             c.timePassed = t*timePassed;
             c.b = arena;
         }        
@@ -285,7 +336,7 @@ void updatePathWithCollisions(Movable * me, int ignoreBall, double timePassed)
     c.a = me;
     
     checkWallCollisions(me, timePassed, c);
-    checkBallCollisions(me, ignoreBall, timePassed, c);
+    //checkBallCollisions(me, ignoreBall, timePassed, c);
     
     if(c.timePassed != NO_COLLISION)
     {
@@ -296,6 +347,7 @@ void updatePathWithCollisions(Movable * me, int ignoreBall, double timePassed)
     }
     else
     {
+        
         me->pos = me->pos+(me->dir*me->vel*timePassed);
     }
 }
@@ -305,8 +357,7 @@ void updateBalls(double timePassed)
     for(int i = 0; i < NUM_BALLS; i++)
     {        
         updatePathWithCollisions(balls[i], i, timePassed);
-        //balls[i]->updatePos(timePassed);
-        //balls[i]->vel *= 0.999;
+        balls[i]->vel *= FRICTION;
     }
 }
 
@@ -317,7 +368,6 @@ void updatePlayer(double timePassed)
     player->vel = mouseY*-SPEED;
     
     updatePathWithCollisions(player, -1, timePassed);
-    player->updatePos(timePassed);
 }
 
 
@@ -463,6 +513,8 @@ void initGame()
     arena = Model::arena;
     balls = Model::balls;
     compass = Model::compass;
+    jOne = Model::jOne;
+    jTwo = Model::jTwo;
     allocBalls();
 }
 
@@ -489,6 +541,15 @@ int main(int argc, char * argv[])
     //Aim Stationary Light
     GLfloat pos[4] = {0.0f, 10000.0f, 0.0f, 1.0f};
     glLightfv(GL_LIGHT0, GL_POSITION, pos);
+    GLfloat full[4] = { 0.5f, 0.5f, 0.5f, 0.5f };
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, full);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, full);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, full);
+    
+    //Set up Moving Light
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, full);
+    glLightfv(GL_LIGHT1, GL_SPECULAR, full);
+    glLightfv(GL_LIGHT1, GL_AMBIENT, full);
 	
     //Callback Functions
 	glutDisplayFunc(DisplayFunc);
