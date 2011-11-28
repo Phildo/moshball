@@ -17,7 +17,7 @@
 #define HUD_HEIGHT COMPASS_DISTANCE*2+100
 
 #define NUM_MODES 2
-#define NUM_BALLS 0
+#define NUM_BALLS 10
 #define SEED 0
 
 #define MOVEMENT_TOLERANCE 0.025
@@ -56,6 +56,8 @@ public:
     static Arrow *compass;
     static Jumbotron *jOne;
     static Jumbotron *jTwo;
+    static Jumbotron *jThree;
+    static Jumbotron *jFour;
     
     static time_t currTime;
     static Vector3 UpVect;

@@ -23,6 +23,9 @@ Jumbotron::~Jumbotron()
 {
 }
 
+#define J_WIDTH 300
+#define J_HEIGHT 200
+#define J_THICK 40
 void Jumbotron::compileDL()
 {
     if(Jumbotron::compiled) return;
@@ -34,6 +37,53 @@ void Jumbotron::compileDL()
     glTranslated(0.0, 0.0, -300.0);
     gluCylinder(gluNewQuadric(), 20, 20, 300, 50, 50);
     glPopMatrix();
+    glPushMatrix();
+    glTranslated(0, 300, 0);
+    glBegin(GL_TRIANGLES);
+    
+    glVertex3d(-.5*J_WIDTH, -.5*J_HEIGHT, .5*J_THICK);
+    glVertex3d(.5*J_WIDTH, -.5*J_HEIGHT, .5*J_THICK);
+    glVertex3d(.5*J_WIDTH, .5*J_HEIGHT, .5*J_THICK);
+
+    glVertex3d(-.5*J_WIDTH, -.5*J_HEIGHT, .5*J_THICK);
+    glVertex3d(.5*J_WIDTH, .5*J_HEIGHT, .5*J_THICK);
+    glVertex3d(-.5*J_WIDTH, .5*J_HEIGHT, .5*J_THICK);
+    
+    glVertex3d(-.5*J_WIDTH, -.5*J_HEIGHT, -.5*J_THICK);
+    glVertex3d(.5*J_WIDTH, -.5*J_HEIGHT, -.5*J_THICK);
+    glVertex3d(.5*J_WIDTH, .5*J_HEIGHT, -.5*J_THICK);
+    
+    glVertex3d(-.5*J_WIDTH, -.5*J_HEIGHT, -.5*J_THICK);
+    glVertex3d(.5*J_WIDTH, .5*J_HEIGHT, -.5*J_THICK);
+    glVertex3d(-.5*J_WIDTH, .5*J_HEIGHT, -.5*J_THICK);
+    
+    glVertex3d(-.5*J_WIDTH, -.5*J_HEIGHT, -.5*J_THICK);
+    glVertex3d(-.5*J_WIDTH, .5*J_HEIGHT, .5*J_THICK);
+    glVertex3d(-.5*J_WIDTH, .5*J_HEIGHT, -.5*J_THICK);
+    
+    glVertex3d(-.5*J_WIDTH, -.5*J_HEIGHT, -.5*J_THICK);
+    glVertex3d(-.5*J_WIDTH, -.5*J_HEIGHT, .5*J_THICK);
+    glVertex3d(-.5*J_WIDTH, .5*J_HEIGHT, .5*J_THICK);
+    
+    glVertex3d(.5*J_WIDTH, -.5*J_HEIGHT, -.5*J_THICK);
+    glVertex3d(.5*J_WIDTH, .5*J_HEIGHT, .5*J_THICK);
+    glVertex3d(.5*J_WIDTH, .5*J_HEIGHT, -.5*J_THICK);
+    
+    glVertex3d(.5*J_WIDTH, -.5*J_HEIGHT, -.5*J_THICK);
+    glVertex3d(.5*J_WIDTH, -.5*J_HEIGHT, .5*J_THICK);
+    glVertex3d(.5*J_WIDTH, .5*J_HEIGHT, .5*J_THICK);
+    
+    glVertex3d(-.5*J_WIDTH, -.5*J_HEIGHT, -.5*J_THICK);
+    glVertex3d(.5*J_WIDTH, -.5*J_HEIGHT, .5*J_THICK);
+    glVertex3d(.5*J_WIDTH, -.5*J_HEIGHT, -.5*J_THICK);
+    
+    glVertex3d(-.5*J_WIDTH, -.5*J_HEIGHT, -.5*J_THICK);
+    glVertex3d(-.5*J_WIDTH, -.5*J_HEIGHT, .5*J_THICK);
+    glVertex3d(.5*J_WIDTH, -.5*J_HEIGHT, .5*J_THICK);
+
+    glEnd();
+    glPopMatrix();
+    
     glEndList();
     Jumbotron::compiled = true;
 }

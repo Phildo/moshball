@@ -14,6 +14,8 @@ Ball ** Model::balls;
 Arrow * Model::compass;
 Jumbotron * Model::jOne;
 Jumbotron * Model::jTwo;
+Jumbotron * Model::jThree;
+Jumbotron * Model::jFour;
 
 time_t Model::currTime;
 Vector3 Model::UpVect;
@@ -31,6 +33,8 @@ void Model::setUpModel()
     compass = new Arrow();
     jOne = new Jumbotron();
     jTwo = new Jumbotron();
+    jThree = new Jumbotron();
+    jFour = new Jumbotron();
     
     UpVect.set   ( 0, 1, 0);
     DownVect.set ( 0,-1, 0);

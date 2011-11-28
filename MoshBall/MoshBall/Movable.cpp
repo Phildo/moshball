@@ -23,3 +23,8 @@ void Movable::updatePos(double timePassed)
 {
     pos+=(dir*(vel*timePassed));
 }
+
+void Movable::hit()
+{
+    //Do nothing
+}

@@ -20,6 +20,8 @@ Ball ** balls;
 Arrow * compass;
 Jumbotron * jOne;
 Jumbotron * jTwo;
+Jumbotron * jThree;
+Jumbotron * jFour;
 
 
 /*
@@ -70,8 +72,27 @@ void drawBalls()
 void drawJumbos()
 {
     glPushMatrix();
-    //glTranslated(ARENA_LENGTH*.5, 0, ARENA_WIDTH);
+    glTranslated(ARENA_LENGTH*.5, ARENA_HEIGHT*-.5, ARENA_WIDTH*.5);
+    glRotated(45, 0, 1, 0);
     jOne->draw();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslated(ARENA_LENGTH*-.5, ARENA_HEIGHT*-.5, ARENA_WIDTH*.5);
+    glRotated(125, 0, 1, 0);
+    jTwo->draw();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslated(ARENA_LENGTH*.5, ARENA_HEIGHT*-.5, ARENA_WIDTH*-.5);
+    glRotated(125, 0, 1, 0);
+    jThree->draw();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslated(ARENA_LENGTH*-.5, ARENA_HEIGHT*-.5, ARENA_WIDTH*-.5);
+    glRotated(45, 0, 1, 0);
+    jFour->draw();
     glPopMatrix();
 }
 
@@ -169,6 +190,8 @@ void drawHud()
 
 void collide(Movable *a, Movable *b)
 {
+    a->hit();
+    b->hit();
     bool negA = false;
     bool negB = false;
     if(a->vel < 0) negA = true;
@@ -336,7 +359,7 @@ void updatePathWithCollisions(Movable * me, int ignoreBall, double timePassed)
     c.a = me;
     
     checkWallCollisions(me, timePassed, c);
-    //checkBallCollisions(me, ignoreBall, timePassed, c);
+    checkBallCollisions(me, ignoreBall, timePassed, c);
     
     if(c.timePassed != NO_COLLISION)
     {
@@ -515,6 +538,8 @@ void initGame()
     compass = Model::compass;
     jOne = Model::jOne;
     jTwo = Model::jTwo;
+    jThree = Model::jThree;
+    jFour = Model::jFour;
     allocBalls();
 }
 

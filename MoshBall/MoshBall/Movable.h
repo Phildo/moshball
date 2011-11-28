@@ -23,6 +23,8 @@ public:
     
     //Adds dir*vel*timePassed to pos (updates 'pos' in 'dir' direction by amount 'vel')
     virtual void updatePos(double timePassed);
+    
+    virtual void hit();
 };
 
 #endif
