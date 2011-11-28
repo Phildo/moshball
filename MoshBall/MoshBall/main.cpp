@@ -144,6 +144,11 @@ void drawMain()
 	renderSelf(false);
 }
 
+void drawJumboHud()
+{
+
+}
+
 void drawHud()
 {
     glDisable(GL_LIGHTING);
@@ -381,6 +386,7 @@ void updateBalls(double timePassed)
     {        
         updatePathWithCollisions(balls[i], i, timePassed);
         balls[i]->vel *= FRICTION;
+        balls[i]->updateTime();
     }
 }
 
@@ -448,6 +454,7 @@ void DisplayFunc()
     
     drawMain();
     drawHud();
+    drawJumboHud();
     
 	//DoubleBuffering
 	glutSwapBuffers();

@@ -21,7 +21,7 @@ void Arena::compileDL()
     Arena::displayList = glGenLists(1);
     glNewList(Arena::displayList, GL_COMPILE);
  
-    setColor(0.8, 0.2, 0.0, 1.0, 0.25, 0.25, 0.5);
+    setColor(0.4, 0.2, 0.4, 1.0, 0.25, 0.25, 0.5);
     setGLColor();
  
     glBegin(GL_QUADS);

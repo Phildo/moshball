@@ -17,7 +17,7 @@
 #define HUD_HEIGHT COMPASS_DISTANCE*2+100
 
 #define NUM_MODES 2
-#define NUM_BALLS 10
+#define NUM_BALLS 50
 #define SEED 0
 
 #define MOVEMENT_TOLERANCE 0.025
