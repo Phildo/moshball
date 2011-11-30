@@ -173,7 +173,31 @@ void drawHud()
     glDisable(GL_SCISSOR_TEST);
 }
 
-
+/*
+void frameBuffer()
+{
+    glGenFramebuffersEXT(1, &frame_buffer_object);
+    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, frame_buffer_object);
+    glGenRenderbuffersEXT(1, &depth_buffer);
+    glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, depth_buffer);
+    glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT, frame_buffer_width, frame_buffer_height);
+    glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, depth_buffer);
+    
+    glGenTextures(1, &jumbotron_id);
+    glBindTexture(GL_TEXTURE_2D, jumbotron_id);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, frame_buffer_width, frame_buffer_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+    glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, jumbotron_id, 0);
+    GLenum status = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
+    if (status != GL_FRAMEBUFFER_COMPLETE_EXT)
+        throw std::string("Frame buffer failed to initialize properly");
+    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+}
+*/
 
 
 

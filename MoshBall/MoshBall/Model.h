@@ -21,7 +21,7 @@
 #define SEED 0
 
 #define MOVEMENT_TOLERANCE 0.025
-#define SPEED 100
+#define SPEED 500
 #define ROT_SPEED 10
 #define FRICTION 0.9999
 
