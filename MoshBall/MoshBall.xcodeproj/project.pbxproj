@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4A42F44A146F82F5006384BA /* Movable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A42F449146F82F5006384BA /* Movable.cpp */; };
 		4A42F44E146F8304006384BA /* DrawableGeometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A42F44D146F8304006384BA /* DrawableGeometry.cpp */; };
+		4A5283FF148701E100BD9110 /* Skybox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A5283FD148701E100BD9110 /* Skybox.cpp */; };
 		4AB291F8146730F5001C9E47 /* Model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AB291F6146730F5001C9E47 /* Model.cpp */; };
 		4AB507B41479B0030054B7B2 /* Collision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AB507B21479B0030054B7B2 /* Collision.cpp */; };
 		4AD3A8F9145DE1B800685804 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3A8F8145DE1B800685804 /* main.cpp */; };
@@ -45,6 +46,8 @@
 		4A42F44C146F82FC006384BA /* Movable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Movable.h; sourceTree = "<group>"; };
 		4A42F44D146F8304006384BA /* DrawableGeometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DrawableGeometry.cpp; sourceTree = "<group>"; };
 		4A42F44F146F830B006384BA /* DrawableGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawableGeometry.h; sourceTree = "<group>"; };
+		4A5283FD148701E100BD9110 /* Skybox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Skybox.cpp; sourceTree = "<group>"; };
+		4A5283FE148701E100BD9110 /* Skybox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Skybox.h; sourceTree = "<group>"; };
 		4AB291F6146730F5001C9E47 /* Model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Model.cpp; sourceTree = "<group>"; };
 		4AB291F7146730F5001C9E47 /* Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
 		4AB507B21479B0030054B7B2 /* Collision.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Collision.cpp; sourceTree = "<group>"; };
@@ -121,6 +124,8 @@
 				4A42F449146F82F5006384BA /* Movable.cpp */,
 				4AB507B21479B0030054B7B2 /* Collision.cpp */,
 				4AB507B31479B0030054B7B2 /* Collision.h */,
+				4A5283FE148701E100BD9110 /* Skybox.h */,
+				4A5283FD148701E100BD9110 /* Skybox.cpp */,
 				4AD3A8FE145DE2F400685804 /* Arena.h */,
 				4AD3A8FD145DE2F400685804 /* Arena.cpp */,
 				4AD3A901145DE2FF00685804 /* Ball.h */,
@@ -223,6 +228,7 @@
 				4A42F44E146F8304006384BA /* DrawableGeometry.cpp in Sources */,
 				4ADB27E5147055B200FF5C77 /* Arrow.cpp in Sources */,
 				4AB507B41479B0030054B7B2 /* Collision.cpp in Sources */,
+				4A5283FF148701E100BD9110 /* Skybox.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,7 +270,7 @@
 		4AD3A8F6145DE16400685804 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -274,8 +280,8 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/MoshBall/DevIL-SDK-x64-1.7.8\"",
-					"\"$(SRCROOT)/MoshBall/DevIL-SDK-x64-1.7.8/unicode\"",
+					"\"../../LIBS/DevIL\"",
+					"\"../../LIBS/DevIL/include/IL\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -284,7 +290,7 @@
 		4AD3A8F7145DE16400685804 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -294,8 +300,8 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/MoshBall/DevIL-SDK-x64-1.7.8\"",
-					"\"$(SRCROOT)/MoshBall/DevIL-SDK-x64-1.7.8/unicode\"",
+					"\"../../LIBS/DevIL\"",
+					"\"../../LIBS/DevIL/include/IL\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

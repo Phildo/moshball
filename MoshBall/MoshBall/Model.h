@@ -35,12 +35,14 @@
 #include "Player.h"
 #include "Ball.h"
 #include "Arena.h"
+#include "Skybox.h"
 #include "Arrow.h"
 #include "Jumbotron.h"
 #include "highprecisiontime.h"
 
 class Player;
 class Ball;
+class Skybox;
 class Arena;
 class Arrow;
 class Jumbotron;
@@ -52,6 +54,7 @@ public:
     
     static Player *player;
     static Ball **balls;
+    static Skybox *skybox;
     static Arena *arena;
     static Arrow *compass;
     static Jumbotron *jOne;

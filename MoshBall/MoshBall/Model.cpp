@@ -10,6 +10,7 @@
 
 Player * Model::player;
 Arena * Model::arena;
+Skybox * Model::skybox;
 Ball ** Model::balls;
 Arrow * Model::compass;
 Jumbotron * Model::jOne;
@@ -28,6 +29,7 @@ Vector3 Model::EastVect;
 void Model::setUpModel()
 {
     arena = new Arena();
+    skybox = new Skybox();
     player = new Player();
     balls = new Ball*[NUM_BALLS];
     compass = new Arrow();
