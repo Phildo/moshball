@@ -15,6 +15,7 @@ static double mouseX, mouseY;
 static int height, width;
 
 Player * player;
+Skybox * skybox;
 Arena * arena;
 Ball ** balls;
 Arrow * compass;
@@ -99,9 +100,17 @@ void drawJumbos()
 void drawCrosshair()
 {
     glPushMatrix();
-    glTranslated(player->pos[0], player->pos[1], player->pos[2]);
-    
-    //glCallList(playerList);
+    glLoadIdentity();
+    glLineWidth(3);
+    glDisable(GL_LIGHTING);
+    glColor4d(1.0,1.0,1.0,1.0);
+    glBegin(GL_LINES);
+    glVertex3d(-2, 0, -20);
+    glVertex3d(2, 0, -20);
+    glVertex3d(0, -2, -20);
+    glVertex3d(0, 2, -20);
+    glEnd();
+    glEnable(GL_LIGHTING);
     glPopMatrix();
 }
 
@@ -116,7 +125,10 @@ void renderSelf(bool forMap)
     }
     else 
     {
-        drawCrosshair();
+        glPushMatrix();
+        glTranslated(player->pos[0], player->pos[1], player->pos[2]);
+        skybox->draw();
+        glPopMatrix();
         drawJumbos();
     }
 }
@@ -133,6 +145,7 @@ void drawMain()
     
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+    
     gluLookAt(player->pos[0], player->pos[1], player->pos[2], 
               player->pos[0]+player->dir[0], player->pos[1]+player->dir[1], player->pos[2]+player->dir[2], 
               0.0, 1.0, 0.0);
@@ -141,6 +154,8 @@ void drawMain()
     GLfloat pos[4] = {player->pos[0], 10.0f, player->pos[2], 1.0f};
     glLightfv(GL_LIGHT1, GL_POSITION, pos);
     
+    drawCrosshair();
+
 	renderSelf(false);
 }
 
@@ -491,7 +506,7 @@ void IdleFunc()
     
     //Update Model
     updatePlayer(timePassed);
-    updateBalls(timePassed);
+    //updateBalls(timePassed);
     
     glutPostRedisplay();
 }
@@ -564,6 +579,7 @@ void initGame()
     
     Model::setUpModel();
     player = Model::player;
+    skybox = Model::skybox;
     arena = Model::arena;
     balls = Model::balls;
     compass = Model::compass;
@@ -588,11 +604,13 @@ int main(int argc, char * argv[])
     
 	//One-Time setups
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     glEnable(GL_LIGHT1);
     glEnable(GL_NORMALIZE);
     glDepthFunc(GL_LEQUAL);
     glShadeModel(GL_FLAT);
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     
     //Aim Stationary Light
     GLfloat pos[4] = {0.0f, 10000.0f, 0.0f, 1.0f};

@@ -24,7 +24,7 @@ void Ball::compileDL()
     if(Ball::compiled) return;
     Ball::displayList = glGenLists(1);
     glNewList(Ball::displayList, GL_COMPILE);
-    gluSphere(gluNewQuadric(),BALL_RADIUS,10,10);
+    gluSphere(gluNewQuadric(),BALL_RADIUS,4,4);
     glEndList();
     Ball::compiled = true;
 }

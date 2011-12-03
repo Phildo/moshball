@@ -14,6 +14,7 @@ GLuint Skybox::displayList;
 Skybox::Skybox()
 {
 	if(!Skybox::compiled) {
+        setColor(0.2,0.2,0.2,1.0,0.5,0.5,0.5);
         Skybox::compileDL();
     }
 }
@@ -29,43 +30,43 @@ void Skybox::compileDL()
     Skybox::displayList = glGenLists(1);
     glNewList(Skybox::displayList, GL_COMPILE);
     
-    
+    setGLColor();
     glBegin(GL_QUADS);
     
     //Ceiling
     glNormal3d(0.0, 1.0, 0.0);
-    glVertex3d(-.6*ARENA_WIDTH, ARENA_HEIGHT, .6*ARENA_LENGTH);
-    glVertex3d(.6*ARENA_WIDTH, ARENA_HEIGHT, .6*ARENA_LENGTH);
-    glVertex3d(.6*ARENA_WIDTH, ARENA_HEIGHT, -.6*ARENA_LENGTH);
-    glVertex3d(-.6*ARENA_WIDTH, ARENA_HEIGHT, -.6*ARENA_LENGTH);
+    glVertex3d(-ARENA_WIDTH, ARENA_HEIGHT*4, ARENA_LENGTH);
+    glVertex3d(ARENA_WIDTH, ARENA_HEIGHT*4, ARENA_LENGTH);
+    glVertex3d(ARENA_WIDTH, ARENA_HEIGHT*4, -ARENA_LENGTH);
+    glVertex3d(-ARENA_WIDTH, ARENA_HEIGHT*4, -ARENA_LENGTH);
     
     //West Wall
     glNormal3d(1.0, 0.0, 0.0);
-    glVertex3d(-.6*ARENA_WIDTH, ARENA_HEIGHT, -.6*ARENA_LENGTH);
-    glVertex3d(-.6*ARENA_WIDTH, ARENA_HEIGHT, .6*ARENA_LENGTH);
-    glVertex3d(-.6*ARENA_WIDTH, -.5*ARENA_HEIGHT, .6*ARENA_LENGTH);
-    glVertex3d(-.6*ARENA_WIDTH, -.5*ARENA_HEIGHT, -.6*ARENA_LENGTH);
+    glVertex3d(-ARENA_WIDTH, ARENA_HEIGHT*4, -ARENA_LENGTH);
+    glVertex3d(-ARENA_WIDTH, ARENA_HEIGHT*4, ARENA_LENGTH);
+    glVertex3d(-ARENA_WIDTH, -ARENA_HEIGHT, ARENA_LENGTH);
+    glVertex3d(-ARENA_WIDTH, -ARENA_HEIGHT, -ARENA_LENGTH);
     
     //East Wall
     glNormal3d(-1.0, 0.0, 0.0);
-    glVertex3d(.6*ARENA_WIDTH, ARENA_HEIGHT, -.6*ARENA_LENGTH);
-    glVertex3d(.6*ARENA_WIDTH, ARENA_HEIGHT, .6*ARENA_LENGTH);
-    glVertex3d(.6*ARENA_WIDTH, -.5*ARENA_HEIGHT, .6*ARENA_LENGTH);
-    glVertex3d(.6*ARENA_WIDTH, -.5*ARENA_HEIGHT, -.6*ARENA_LENGTH);
+    glVertex3d(ARENA_WIDTH, ARENA_HEIGHT*4, -ARENA_LENGTH);
+    glVertex3d(ARENA_WIDTH, ARENA_HEIGHT*4, ARENA_LENGTH);
+    glVertex3d(ARENA_WIDTH, -ARENA_HEIGHT, ARENA_LENGTH);
+    glVertex3d(ARENA_WIDTH, -ARENA_HEIGHT, -ARENA_LENGTH);
     
     //North Wall
     glNormal3d(0.0, 0.0, 1.0);
-    glVertex3d(-.6*ARENA_WIDTH, ARENA_HEIGHT, -.6*ARENA_LENGTH);
-    glVertex3d(.6*ARENA_WIDTH, ARENA_HEIGHT, -.6*ARENA_LENGTH);
-    glVertex3d(.6*ARENA_WIDTH, -.5*ARENA_HEIGHT, -.6*ARENA_LENGTH);
-    glVertex3d(-.6*ARENA_WIDTH, -.5*ARENA_HEIGHT, -.6*ARENA_LENGTH);
+    glVertex3d(-ARENA_WIDTH, ARENA_HEIGHT*4, -ARENA_LENGTH);
+    glVertex3d(ARENA_WIDTH, ARENA_HEIGHT*4, -ARENA_LENGTH);
+    glVertex3d(ARENA_WIDTH, -ARENA_HEIGHT, -ARENA_LENGTH);
+    glVertex3d(-ARENA_WIDTH, -ARENA_HEIGHT, -ARENA_LENGTH);
     
     //South Wall
     glNormal3d(0.0, 0.0, -1.0);
-    glVertex3d(-.6*ARENA_WIDTH, ARENA_HEIGHT, .6*ARENA_LENGTH);
-    glVertex3d(.6*ARENA_WIDTH, ARENA_HEIGHT, .6*ARENA_LENGTH);
-    glVertex3d(.6*ARENA_WIDTH, -.5*ARENA_HEIGHT, .6*ARENA_LENGTH);
-    glVertex3d(-.6*ARENA_WIDTH, -.5*ARENA_HEIGHT, .6*ARENA_LENGTH);
+    glVertex3d(-ARENA_WIDTH, ARENA_HEIGHT*4, ARENA_LENGTH);
+    glVertex3d(ARENA_WIDTH, ARENA_HEIGHT*4, ARENA_LENGTH);
+    glVertex3d(ARENA_WIDTH, -ARENA_HEIGHT, ARENA_LENGTH);
+    glVertex3d(-ARENA_WIDTH, -ARENA_HEIGHT, ARENA_LENGTH);
     
     glEnd();
     glEndList();
